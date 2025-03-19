@@ -1,12 +1,13 @@
 # Integradores
 
-1. Búsqueda de patrones en una cadena de texto
+1. Búsqueda de patrones en una cadena de texto  
 
-2. Dado un listado de archivos/carpetas, buscar tsort para poder saber qué archivo se debe procesar primero
+2. Dado un listado de archivos/carpetas, buscar tsort para poder saber qué archivo se debe procesar primero  
 
-3. Red semántica para predicción en textos/asociar palabras
+3. Red semántica para predicción en textos/asociar palabras  
 
-4. Análisis de contactos en una red social
+4. Análisis de contactos en una red social  
 
-5. Red neuronal
+5. Red neuronal  
 
+6. Dado un grafo representado en una matriz de adyacencia, verificar si es un árbol.  
