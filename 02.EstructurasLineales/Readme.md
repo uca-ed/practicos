@@ -10,7 +10,7 @@
 
 5. Implementar en un lenguaje de programación el algoritmo de cálculo de T-Sort basado en un grafo. De no ser posible calcularlo, indicar que la estructura es cíclica.  
   
-La aplicación debe soportar leer el grafo desde un archivo de disco y la salida debe ser una secuencia con los nodos a recorrer para recrear el paso.  
+> La aplicación debe soportar leer el grafo desde un archivo de disco y la salida debe ser la secuencia generada por t-sort.   
 
 6. Se modeliza en un arreglo “INSCRIPTOS” de 5 dimensiones la cantidad de alumnos que hay en las aulas de la universidad en cada bloque horario (según las listas de inscripción).  
 
