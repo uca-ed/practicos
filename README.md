@@ -45,6 +45,10 @@ Cuando el trabajo práctico esté listo para su entrega:
    - Comparar la branch donde se realizo el trabajo a entregar con la blanch "Main" y crear el Pull Request
 
   ![image](https://github.com/user-attachments/assets/69494c47-fced-4f7d-81e9-e6e65091d2c5)
- 
+
+   - Especificar el trabajo pratico que se esta entregando y crear el Pull Request
+
+  ![image](https://github.com/user-attachments/assets/47796d26-1256-4cb5-b956-f18d7761e5ea)
+
    - Notificar al docente sobre la entrega.
 
