@@ -34,13 +34,21 @@ Luego de este paso, todos los miembros del equipo pueden acceder al repositorio 
 ### 4. Enviar el enlace del repositorio  
 Compartir el **link del repositorio** con el docente.
 
-### 5. Realizar un release para la entrega  
+### 5. Realizar un **Pull Request** para la entrega  
 Cuando el trabajo práctico esté listo para su entrega:
-   - Crear un **release** en GitHub.
+   - Crear un **Pull Request** en GitHub.
 
-  ![image](https://github.com/user-attachments/assets/90ee657c-6661-45c2-b2f5-697dcb3195be)
-  
-  ![image](https://github.com/user-attachments/assets/34c204ab-9261-4aff-a61f-c8587af18729)
-  
+  ![image](https://github.com/user-attachments/assets/307f2593-91c2-41fc-b0f7-902e9bebc133)
+
+  ![image](https://github.com/user-attachments/assets/8081d5a3-a7cd-4327-a6b2-1cba83abf056)
+
+   - Comparar la branch donde se realizo el trabajo a entregar con la blanch "Main" y crear el Pull Request
+
+  ![image](https://github.com/user-attachments/assets/69494c47-fced-4f7d-81e9-e6e65091d2c5)
+
+   - Especificar el trabajo pratico que se esta entregando y crear el Pull Request
+
+  ![image](https://github.com/user-attachments/assets/47796d26-1256-4cb5-b956-f18d7761e5ea)
+
    - Notificar al docente sobre la entrega.
 
