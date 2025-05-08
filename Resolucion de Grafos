@@ -1,0 +1,177 @@
+import numpy as np
+import pandas as pd
+import json
+from collections import deque
+
+# ===================================================
+# EJERCICIO 1: REPRESENTACIÓN CON MATRIZ DE ADYACENCIA
+# ===================================================
+
+def cargar_grafo_csv(path):
+    """
+    Lee un CSV sin cabeceras con la matriz de adyacencia.
+    Devuelve:
+      - matriz: ndarray n×n de 0/1
+    Los nodos se identifican por sus índices 0…n-1.
+    """
+    matriz = pd.read_csv(path, header=None).values
+    return matriz
+
+def cargar_grafo_json(path):
+    """
+    Lee un JSON con formato:
+      {
+        "nodes": [...lista de etiquetas...],
+        "edges": [
+            {"from": etiqueta_origen, "to": etiqueta_destino},
+            …
+        ]
+      }
+    Devuelve:
+      - matriz: ndarray n×n de 0/1
+      - nodos: lista de etiquetas, ordenada según posición en la matriz
+    """
+    with open(path, 'r') as f:
+        data = json.load(f)
+
+    nodos = list(data["nodes"])
+    n     = len(nodos)
+    matriz = np.zeros((n, n), dtype=int)
+    for arista in data["edges"]:
+        i = nodos.index(arista["from"])
+        j = nodos.index(arista["to"])
+        matriz[i][j] = 1
+
+    return matriz, nodos
+
+def nodos_minimales(matriz):
+    """Devuelve lista de índices de nodos sin aristas entrantes."""
+    return [i for i in range(matriz.shape[0]) if np.sum(matriz[:, i]) == 0]
+
+def nodos_maximales(matriz):
+    """Devuelve lista de índices de nodos sin aristas salientes."""
+    return [i for i in range(matriz.shape[0]) if np.sum(matriz[i, :]) == 0]
+
+def vecindad_derecha(matriz, nodo):
+    """Devuelve lista de índices de sucesores del nodo dado."""
+    return [j for j in range(matriz.shape[1]) if matriz[nodo, j] == 1]
+
+def vecindad_izquierda(matriz, nodo):
+    """Devuelve lista de índices de predecesores del nodo dado."""
+    return [i for i in range(matriz.shape[0]) if matriz[i, nodo] == 1]
+
+# --- Ejemplo de uso ejercicio 1 ---
+# Desde CSV (nodos 0…n-1)
+m_csv = cargar_grafo_csv("01.csv")
+print("Mínimales (CSV):", nodos_minimales(m_csv))
+print("Maximales (CSV):", nodos_maximales(m_csv))
+print("Vec. derecha nodo 0:", vecindad_derecha(m_csv, 0))
+print("Vec. izquierda nodo 2:", vecindad_izquierda(m_csv, 2))
+
+# Desde JSON (etiquetas arbitrarias)
+m_json, nodos_json = cargar_grafo_json("grafo.json")
+print("Nodos JSON:", nodos_json)
+print("Mínimales (JSON):", [nodos_json[i] for i in nodos_minimales(m_json)])
+print("Maximales (JSON):", [nodos_json[i] for i in nodos_maximales(m_json)])
+print("Vec. derecha de", nodos_json[0], ":", [nodos_json[j] for j in vecindad_derecha(m_json, 0)])
+print("Vec. izquierda de", nodos_json[2], ":", [nodos_json[i] for i in vecindad_izquierda(m_json, 2)])
+
+
+# ===================================================
+# EJERCICIO 2: PROPIEDADES DE UNA RELACIÓN (REF, SIM, ANTIS, TRANS)
+# ===================================================
+
+def cargar_relaciones(path):
+    """
+    Lee un JSON con:
+      "P": [lista de nodos],
+      "E": { nodo: [lista de destinos], … }
+    Devuelve:
+      - nodos: lista de etiquetas
+      - relaciones: lista de pares (origen, destino)
+    """
+    with open(path, 'r') as f:
+        data = json.load(f)
+
+    nodos = data["P"]
+    relaciones = []
+    for origen, destinos in data["E"].items():
+        for destino in destinos:
+            relaciones.append((origen, destino))
+    return nodos, relaciones
+
+def es_reflexiva(nodos, relaciones):
+    return all((x, x) in relaciones for x in nodos)
+
+def es_simetrica(relaciones):
+    return all((b, a) in relaciones for (a, b) in relaciones)
+
+def es_antisimetrica(relaciones):
+    return all(a == b or (b, a) not in relaciones for (a, b) in relaciones)
+
+def es_transitiva(relaciones):
+    return all((a, d) in relaciones
+               for (a, b) in relaciones
+               for (c, d) in relaciones
+               if b == c)
+
+def tipo_relacion(nodos, relaciones):
+    r = es_reflexiva(nodos, relaciones)
+    s = es_simetrica(relaciones)
+    a = es_antisimetrica(relaciones)
+    t = es_transitiva(relaciones)
+
+    print("Reflexiva:",      r)
+    print("Simétrica:",     s)
+    print("Antisimétrica:", a)
+    print("Transitiva:",    t)
+
+    if r and s and t:
+        print("⇒ Es **Relación de Equivalencia**.")
+    elif r and a and t:
+        print("⇒ Es **Orden Parcial**.")
+    else:
+        print("⇒ No es ni equivalencia ni orden parcial.")
+
+# --- Ejemplo de uso ejercicio 2 ---
+nodos_r, rels = cargar_relaciones("01.json")
+tipo_relacion(nodos_r, rels)
+
+
+# ===================================================
+# EJERCICIO 3: BÚSQUEDA DE CAMINO (BFS)
+# ===================================================
+
+def cargar_grafo_bfs(path):
+    """
+    Lee un JSON con formato:
+      { nodo: [sucesores], … }
+    Devuelve el dict directamente.
+    """
+    with open(path, 'r') as f:
+        grafo = json.load(f)
+    return grafo
+
+def encontrar_camino(grafo, inicio, fin):
+    """
+    Retorna la lista de nodos que conecta 'inicio' con 'fin'
+    usando BFS, o None si no hay camino.
+    """
+    visitados = set()
+    cola = deque([[inicio]])
+
+    while cola:
+        camino = cola.popleft()
+        nodo   = camino[-1]
+        if nodo == fin:
+            return camino
+        if nodo not in visitados:
+            visitados.add(nodo)
+            for vecino in grafo.get(nodo, []):
+                cola.append(camino + [vecino])
+    return None
+
+# --- Ejemplo de uso ejercicio 3 ---
+grafo_bfs = cargar_grafo_bfs("esDivisorDe-200.json")
+cam = encontrar_camino(grafo_bfs, "A", "E")
+print("Camino A→E:", cam if cam else "No existe")
