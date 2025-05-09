@@ -1,0 +1,157 @@
+import pandas as pd
+import numpy as np
+import json
+
+
+#EJERCICIO 1
+
+def leer_csv_a_matriz(nombre_archivo):
+    archivo = pd.read_csv(nombre_archivo, header=None)
+    matriz = archivo.values
+    return matriz
+
+def cargar_json_como_matriz(path):
+    with open(path, 'r') as f:
+        data = json.load(f)
+
+    nodos = list(data['E'].keys())
+    cantidad_nodos = len(nodos)
+    indice_por_nodo = {nodo: i for i, nodo in enumerate(nodos)}
+    matriz = np.zeros((cantidad_nodos, cantidad_nodos), dtype=int)
+
+    for origen in data['E']:
+        for destino in data['E'][origen]:
+            i = indice_por_nodo[origen]
+            j = indice_por_nodo[destino]
+            matriz[i][j] = 1
+
+    return matriz, nodos
+
+
+def obtener_minimales(matriz):
+    grados_entrada = np.sum(matriz, axis=0)
+    nodos_minimos = []
+    for j in range(len(grados_entrada)):
+        if grados_entrada[j] == 0:
+            nodos_minimos.append(j)
+    return nodos_minimos
+
+def obtener_maximales(matriz):
+    grados_salida = np.sum(matriz, axis=1)
+    nodos_maximos = []
+    for i in range(len(grados_salida)):
+        if grados_salida[i] == 0:
+            nodos_maximos.append(i)
+    return nodos_maximos
+
+
+
+def obtener_vecindad_derecha(matriz_adj, indice_nodo):
+    matriz_np = np.array(matriz_adj)
+    num_nodos = matriz_np.shape[1]
+    vecinos_derecha = []
+    fila_nodo = matriz_np[indice_nodo, :]
+    for j in range(num_nodos):
+        if fila_nodo[j] == 1:
+            vecinos_derecha.append(j)
+    return vecinos_derecha
+
+
+def obtener_vecindad_izquierda(matriz_adj, indice_nodo):
+    matriz_np = np.array(matriz_adj)
+    num_nodos = matriz_np.shape[0]
+    vecinos_izquierda = []
+    columna_nodo = matriz_np[:, indice_nodo]
+    for i in range(num_nodos):
+        if columna_nodo[i] == 1:
+            vecinos_izquierda.append(i)
+    return vecinos_izquierda
+
+
+
+
+
+
+
+
+#EJERCICIO 2
+
+def es_reflexiva(matriz):
+    n = len(matriz)
+    for i in range(n):
+        if matriz[i][i] != 1:
+            return False
+    return True
+
+def es_simetrica(matriz):
+    n = len(matriz)
+    for i in range(n):
+        for j in range(n):
+            if matriz[i][j] == 1 and matriz[j][i] != 1:
+                return False
+    return True
+
+def es_antisimetrica(matriz):
+    n = len(matriz)
+    for i in range(n):
+        for j in range(n):
+            if i != j and matriz[i][j] == 1 and matriz[j][i] == 1:
+                return False
+    return True
+
+def es_transitiva(matriz):
+    n = len(matriz)
+    for i in range(n):
+        for j in range(n):
+            if matriz[i][j] == 1:
+                for k in range(n):
+                    if matriz[j][k] == 1 and matriz[i][k] != 1:
+                        return False
+    return True
+
+
+def tipo_de_relacion(matriz):
+    reflexiva = es_reflexiva(matriz)
+    simetrica = es_simetrica(matriz)
+    antisimetrica = es_antisimetrica(matriz)
+    transitiva = es_transitiva(matriz)
+
+    print("Reflexiva:", reflexiva)
+    print("Simétrica:", simetrica)
+    print("Antisimétrica:", antisimetrica)
+    print("Transitiva:", transitiva)
+
+    if reflexiva and simetrica and transitiva:
+        print("Es una relación de equivalencia")
+    elif reflexiva and antisimetrica and transitiva:
+        print("Es una relación de orden parcial")
+    else:
+        print("No es ni orden ni relación de equivalencia")
+
+
+
+
+#EJERCICIO 3
+
+def cargar_grafo(ruta_archivo):
+    with open(ruta_archivo, 'r') as f:
+        return json.load(f)['E']
+
+
+def paso(grafo, inicio, fin):
+    cola = [[inicio]]
+    visitados = set()
+
+    while cola:
+        camino = cola.pop(0)
+        nodo = camino[-1]
+
+        if nodo == fin:
+            return camino
+
+        if nodo not in visitados:
+            visitados.add(nodo)
+            for vecino in grafo.get(nodo, []):
+                cola.append(camino + [vecino])
+
+    return []
