@@ -1,0 +1,10 @@
+apilar 10
+apilar 20
+apilar 30
+cima
+desapilar
+vacía
+tamaño
+desapilar
+desapilar
+vacía
