@@ -1,0 +1,458 @@
+#EJERCICIO 1
+
+def colafun(desde_archivo):
+    cola = []
+
+    archivo = open(desde_archivo, "r")
+    for linea  in archivo:
+        linea = linea.strip()
+
+        if linea.startswith("ENCOLAR"):
+            _ , VALOR = linea.split()
+            cola.append(VALOR)
+
+        elif linea == "DESENCOLAR":
+            if len(cola) > 0:
+                cola.pop(0)
+
+    archivo.close()
+    print("Estado final de la cola:", cola)
+
+
+nombre_Archivo = "operaciones_cola.txt"
+with open(nombre_Archivo, "w") as f:
+    f.write("ENCOLAR A\n")
+    f.write("ENCOLAR B \n")
+    f.write("DESENCOLAR\n")
+    f.write("ENCOLAR C\n")
+    f.write("DESENCOLAR\n")
+    f.write("ENCOLAR D\n")
+
+colafun(nombre_Archivo)
+
+
+#EJERCICIO 2
+
+def pilafun(nombre_archivo):
+    pila = []
+
+    archivo = open(nombre_archivo, "r")
+    for linea in archivo:
+        linea = linea.strip()
+
+        if linea.startswith("APILAR"):
+            _ , valor = linea.split()
+            pila.append(valor)
+
+        elif linea == "DESAPILAR":
+            if len(pila) > 0:
+                pila.pop()
+
+    archivo.close()
+    print("Estado final de la pila:", pila)
+
+
+nombre_archivo = "operaciones_pila.txt"
+with open(nombre_archivo, "w") as f:
+    f.write("APILAR 1\n")
+    f.write("APILAR 2\n")
+    f.write("APILAR 3\n")
+    f.write("DESAPILAR\n")
+    f.write("APILAR 4\n")
+pilafun(nombre_archivo)
+
+
+
+
+
+
+#EJERCICIO 3
+
+def crear_celda(valor):
+    return {"valor": valor, "siguiente": None}
+
+def agregar_a_lista_enlazada(lista, val):
+    nueva_celda = crear_celda(val)
+
+    if not lista["cabeza"]:
+        lista["cabeza"] = nueva_celda
+    else:
+        actual = lista["cabeza"]
+        while actual["siguiente"] :
+            actual = actual["siguiente"]
+        actual["siguiente"] = nueva_celda
+
+def imprimir_lista_enlazada(lista):
+    actual = lista["cabeza"]
+    elementos = []
+    while actual:
+        elementos.append(actual["valor"])
+        actual = actual["siguiente"]
+    print(" -> ".join(map(str, elementos)) )
+
+
+Mi_lista = {"cabeza": None}
+agregar_a_lista_enlazada(Mi_lista, 10)
+agregar_a_lista_enlazada(Mi_lista, 20)
+agregar_a_lista_enlazada(Mi_lista, 30)
+agregar_a_lista_enlazada(Mi_lista, 40)
+
+print("lista enlazada simple:")
+imprimir_lista_enlazada(Mi_lista)
+
+
+#EJERCICIO 4
+
+def counting_sort_por_letra(las_palabras, pos_actual):
+    N = len(las_palabras)
+    salida_temp = ["" for _ in range(N)]
+    conteo = [0] * 256
+
+    for una_palabra in las_palabras:
+        letra_char = ord(una_palabra[pos_actual]) if pos_actual < len(una_palabra) else 0
+        conteo[letra_char] += 1
+
+    for indice in range(1, 256):
+        conteo[indice] += conteo[indice - 1]
+
+    for palabra_rev in reversed(las_palabras):
+        letra_del_momento = ord(palabra_rev[pos_actual]) if pos_actual < len(palabra_rev) else 0
+        salida_temp[conteo[letra_del_momento] - 1] = palabra_rev
+        conteo[letra_del_momento] -= 1
+
+    return salida_temp
+
+def radix_sort_palabras(mis_palabras):
+    if not mis_palabras:
+        return []
+
+    max_longitud = max(len(p) for p in mis_palabras)
+
+    for p_idx in reversed(range(max_longitud)):
+        mis_palabras = counting_sort_por_letra(mis_palabras, p_idx)
+
+    return mis_palabras
+
+
+palabras_para_test=["Ana", "Carlos", "Sofia", "Diego", "Laura", "Pedro", "Mariana", "Pablo", "Valeria", "Jorge"]
+
+
+print("Palabras antes de ordenar:")
+print(palabras_para_test)
+
+
+palabras_ordenadas = radix_sort_palabras(palabras_para_test)
+print("\nPalabras despues de ordenar:")
+print(palabras_ordenadas)
+
+
+#EJERCICIO 5
+
+from collections import defaultdict, deque
+
+def t_sort(grafo):
+
+    grados_entrantes = defaultdict(int)
+    for nodo in grafo:
+        for prox_nodo in grafo[nodo]:
+            grados_entrantes[prox_nodo] += 1
+
+    cola = deque([n for n in grafo if grados_entrantes[n] == 0])
+
+    orden = []
+
+    while cola:
+        nodo_actual = cola.popleft()
+        orden.append(nodo_actual)
+
+        for prox_nodo in grafo[nodo_actual]:
+            grados_entrantes[prox_nodo] -= 1
+            if grados_entrantes[prox_nodo] == 0 :
+                cola.append(prox_nodo)
+
+    if len(orden) != len(grafo):
+        print("Error: el grafo contiene un ciclo. no se puede hacer T-Sort.")
+    else:
+        print("Orden topologico:", orden, )
+
+
+
+
+
+grafo_sin_ciclo = {
+    'A': ['C', 'D'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['E'],
+    'E': [],
+    'F': ['C']
+}
+t_sort(grafo_sin_ciclo)
+
+
+
+grafo_con_ciclo = {
+    'A': ['B'],
+    'B': ['C'],
+    'C': ['A'],
+    'D': ['A']
+}
+t_sort(grafo_con_ciclo)
+
+
+
+otro_grafo_sin_ciclo = {
+    'X': ['Y'],
+    'Y': ['Z'],
+    'Z': []
+}
+t_sort(otro_grafo_sin_ciclo)
+
+
+
+#EJERCICIO 6
+
+import random
+
+
+
+EDIFICIOS = 4
+PISOS = 5
+ALAS = 2
+AULAS = 25
+BLOQUES = 17
+TOTAL = EDIFICIOS * PISOS * ALAS * AULAS * BLOQUES
+
+
+INSCRIPTOS=[0]*TOTAL
+CAPACIDAD= [0] *TOTAL
+
+def obtener_indice(edificio, piso, ala, aula, bloque):
+    return (
+        edificio * PISOS * ALAS * AULAS * BLOQUES +
+        piso * ALAS * AULAS * BLOQUES +
+        ala * AULAS * BLOQUES +
+        aula * BLOQUES +
+        bloque)
+
+def cargar_datos_simples():
+    for e in range(EDIFICIOS):
+        for p in range(PISOS):
+            for a in range(ALAS):
+                for u in range(AULAS):
+                    for b in range(BLOQUES):
+                        idx = obtener_indice(e, p, a, u, b)
+                        CAPACIDAD[idx] = random.randint(30, 60)
+                        INSCRIPTOS[idx] = random.randint(0, CAPACIDAD[idx])
+
+def aula_con_mayor_ocupacion_simple():
+    max_porcentaje = -1
+    e_max = 0
+    p_max = 0
+    a_max = 0
+    u_max = 0
+    b_max = 0
+
+    for i in range(TOTAL):
+        if CAPACIDAD[i] == 0:
+            continue
+        porcentaje = INSCRIPTOS[i] / CAPACIDAD[i]
+        if porcentaje > max_porcentaje:
+            max_porcentaje = porcentaje
+            temp = i
+            b_max = temp % BLOQUES
+            temp //= BLOQUES
+            u_max = temp % AULAS
+            temp //= AULAS
+            a_max = temp % ALAS
+            temp //= ALAS
+            p_max = temp % PISOS
+            temp //= PISOS
+            e_max = temp
+
+    print("Aula con mas ocupacion:")
+    print("Edificio:", e_max, "Piso:", p_max, "Ala:", "Norte" if a_max == 0 else "Sur", "Aula:", u_max, "Bloque:", b_max)
+    print("Porcentaje:", round(max_porcentaje * 100, 2), "%")
+
+def promedio_alumnos_por_piso(bloque_param):
+    for p in range(PISOS):
+        total_alumnos_piso = 0
+        total_aulas_piso = 0
+        for e in range(EDIFICIOS):
+            for a in range(ALAS):
+                for u in range(AULAS):
+                    idx = obtener_indice(e, p, a, u, bloque_param)
+                    total_alumnos_piso += INSCRIPTOS[idx]
+                    total_aulas_piso += 1
+
+        if total_aulas_piso > 0:
+            promedio = total_alumnos_piso / total_aulas_piso
+            print(f"Piso {p}: promedio {promedio:.2f} alumnos")
+        else:
+            print(f"Piso {p}: No hay aulas")
+
+def alumnos_por_ala_en_lugar_y_hora(edificio_param, piso_param, bloque_param):
+    alumnos_ala_norte = 0
+    alumnos_ala_sur = 0
+
+    for u in range(AULAS):
+        idx = obtener_indice(edificio_param, piso_param, 0, u, bloque_param)
+        alumnos_ala_norte += INSCRIPTOS[idx]
+
+
+    for u in range(AULAS):
+        idx = obtener_indice(edificio_param, piso_param, 1, u, bloque_param)
+        alumnos_ala_sur += INSCRIPTOS[idx]
+
+    print(f"Alumnos en Edificio {edificio_param}, Piso {piso_param}, Bloque {bloque_param}:")
+    print("Ala Norte:", alumnos_ala_norte)
+    print("Ala Sur:", alumnos_ala_sur)
+
+
+cargar_datos_simples()
+
+print("--- Pregunta A ---")
+aula_con_mayor_ocupacion_simple()
+
+print("\n---Pregunta B---")
+bloque_prueba = 5
+promedio_alumnos_por_piso(bloque_prueba)
+
+print("\n---Pregunta C---")
+edificio_prueba = 0
+piso_prueba = 2
+bloque_prueba = 10
+alumnos_por_ala_en_lugar_y_hora(edificio_prueba, piso_prueba, bloque_prueba)
+
+
+import time
+
+inicio_carga = time.time()
+cargar_datos_simples()
+fin_carga = time.time()
+tiempo_carga = fin_carga - inicio_carga
+print(f"Carga: {tiempo_carga:.6f} seg.")
+
+inicio_a = time.time()
+aula_con_mayor_ocupacion_simple()
+fin_a = time.time()
+tiempo_a = fin_a - inicio_a
+print(f"A: {tiempo_a:.6f} seg.")
+
+
+bloque_para_b = 5
+inicio_b = time.time()
+promedio_alumnos_por_piso(bloque_para_b)
+fin_b = time.time()
+tiempo_b = fin_b - inicio_b
+print(f"B: {tiempo_b:.6f} seg.")
+
+
+edificio_para_c = 0
+piso_para_c = 2
+bloque_para_c = 10
+inicio_c = time.time()
+alumnos_por_ala_en_lugar_y_hora(edificio_para_c, piso_para_c, bloque_para_c)
+fin_c = time.time()
+tiempo_c = fin_c - inicio_c
+print(f"C: {tiempo_c:.6f} seg.")
+
+
+import matplotlib.pyplot as plt
+tiempos_para_grafico= {
+    "Carga Datos": tiempo_carga,
+    "Pregunta A": tiempo_a,
+    "Pregunta B": tiempo_b,
+    "Pregunta C":tiempo_c}
+
+nombres_funciones=list(tiempos_para_grafico.keys())
+valores_tiempos=list(tiempos_para_grafico.values())
+
+plt.bar(nombres_funciones, valores_tiempos)
+plt.title("Comparacion de Tiempos de ejecucion de funciones")
+plt.xlabel("Funciones")
+plt.ylabel("tiempo")
+
+plt.show()
+
+
+
+
+
+#EJERCICIO 7
+
+from collections import defaultdict, deque
+
+def leer_grafo_desde_archivo(nombre_archivo):
+    grafo = defaultdict(list)
+    nodos = set()
+
+    with open(nombre_archivo, 'r') as f:
+        for linea in f:
+            if linea.strip() == '':
+                continue
+            partes = linea.strip().split()
+            origen = partes[0]
+            if len(partes) > 1:
+                destino = partes[1]
+                grafo[origen].append(destino)
+                nodos.add(destino)
+            nodos.add(origen)
+
+    for nodo in nodos:
+        if nodo not in grafo:
+            grafo[nodo] = []
+    return grafo
+
+def sort_topologico(grafo):
+    grado_entrada = defaultdict(int)
+
+    for nodo in grafo:
+        for vecino in grafo[nodo]:
+            grado_entrada[vecino] += 1
+    cola = deque([n for n in grafo if grado_entrada[n] == 0])
+    orden = []
+
+    while cola:
+        actual = cola.popleft()
+        orden.append(actual)
+        for vecino in grafo[actual]:
+            grado_entrada[vecino] -= 1
+            if grado_entrada[vecino] == 0:
+                cola.append(vecino)
+
+    if len(orden) !=len(grafo):
+        print("Error: el grafo tiene un ciclo. no se puede ordenar topologicamente.")
+        return None
+    else:
+        print("Orden topologico:", orden)
+        return orden
+
+
+
+nombre_archivo_prueba_1 = "grafo_prueba_1.txt"
+with open(nombre_archivo_prueba_1, "w") as f:
+    f.write("A B\n")
+    f.write("B C\n")
+    f.write("A D\n")
+    f.write("D E\n")
+grafo_prueba_1 = leer_grafo_desde_archivo(nombre_archivo_prueba_1)
+sort_topologico(grafo_prueba_1)
+
+
+nombre_archivo_prueba_2 = "grafo_prueba_2.txt"
+with open(nombre_archivo_prueba_2, "w") as f:
+    f.write("X Y\n")
+    f.write("Y Z\n")
+    f.write("Z X\n")
+grafo_prueba_2 = leer_grafo_desde_archivo(nombre_archivo_prueba_2)
+sort_topologico(grafo_prueba_2)
+
+
+nombre_archivo_prueba_3 = "grafo_prueba_3.txt"
+with open(nombre_archivo_prueba_3, "w") as f:
+    f.write("1 2\n")
+    f.write("3\n")
+    f.write("4\n")
+grafo_prueba_3 = leer_grafo_desde_archivo(nombre_archivo_prueba_3)
+sort_topologico(grafo_prueba_3)
