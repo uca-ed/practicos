@@ -1,0 +1,6 @@
+[
+    {"operacion": "ENQUEUE", "valor": 5},
+    {"operacion": "ENQUEUE", "valor": 10},
+    {"operacion": "DEQUEUE"},
+    {"operacion": "ENQUEUE", "valor": 15}
+]

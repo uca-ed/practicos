@@ -1,0 +1,8 @@
+[
+    {"operacion": "PUSH", "valor": 5},
+    {"operacion": "POP"},
+    {"operacion": "PUSH", "valor": 15},
+    {"operacion": "PUSH", "valor": 25},
+    {"operacion": "POP"},
+    {"operacion": "PUSH", "valor": 35}
+]
