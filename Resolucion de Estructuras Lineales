@@ -51,3 +51,86 @@ class ListaSimple:
         print("None")
 
 EJERCICIO 4
+
+def counting_sort(palabras, index):
+    buckets = [[] for _ in range(27)]
+    for palabra in palabras:
+        letra = ord(palabra[index]) - ord('a') + 1 if index < len(palabra) else 0
+        buckets[letra].append(palabra)
+    return [palabra for bucket in buckets for palabra in bucket]
+
+def radix_sort(palabras):
+    max_len = max(len(palabra) for palabra in palabras)
+    for i in range(max_len - 1, -1, -1):
+        palabras = counting_sort(palabras, i)
+    return palabras
+
+EJERCICIO 5 
+
+NO ENTENDI COMO HACERLO
+
+EJERCICIO 6
+
+dimensiones = [4, 5, 2, 25, 17]
+total_size = 1
+for d in dimensiones:
+    total_size *= d
+
+INSCRIPTOS = [0] * total_size
+CAPACIDAD = [1] * total_size  # valores de ejemplo
+
+def obtener_posicion(d0, d1, d2, d3, d4):
+    return (d0 * 5 * 2 * 25 * 17 +
+            d1 * 2 * 25 * 17 +
+            d2 * 25 * 17 +
+            d3 * 17 +
+            d4)
+
+.a
+
+def mayor_ocupacion():
+    max_porcentaje = 0
+    mejor_pos = None
+    for i in range(len(INSCRIPTOS)):
+        if CAPACIDAD[i] == 0:
+            continue
+        porcentaje = INSCRIPTOS[i] / CAPACIDAD[i]
+        if porcentaje > max_porcentaje:
+            max_porcentaje = porcentaje
+            mejor_pos = i
+    return mejor_pos, max_porcentaje
+.b
+
+def promedio_por_piso_en_bloque(bloque):
+    promedios = []
+    for piso in range(5):
+        total = 0
+        conteo = 0
+        for edificio in range(4):
+            for ala in range(2):
+                for aula in range(25):
+                    pos = obtener_posicion(edificio, piso, ala, aula, bloque)
+                    total += INSCRIPTOS[pos]
+                    conteo += 1
+        promedios.append(total / conteo)
+    return promedios
+
+.c
+
+def alumnos_por_ala(edificio, piso, bloque):
+    conteo = [0, 0]
+    for ala in range(2):
+        for aula in range(25):
+            pos = obtener_posicion(edificio, piso, ala, aula, bloque)
+            conteo[ala] += INSCRIPTOS[pos]
+    return {"Norte": conteo[0], "Sur": conteo[1]}
+
+EJERCICIO 7
+
+import time
+import matplotlib.pyplot as plt
+
+start = time.time()
+radix_sort(["casa", "perro", "avion", "barco"])
+end = time.time()
+print("Tiempo:", end - start)
