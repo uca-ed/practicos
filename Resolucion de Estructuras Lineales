@@ -1,1 +1,31 @@
+Ejercicio 1 
+
+def procesar_cola(nombre_archivo):
+    cola = []
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            partes = linea.strip().split()
+            operacion = partes[0]
+            if operacion == "ENQUEUE":
+                elemento = partes[1]
+                cola.append(elemento)
+            elif operacion == "DEQUEUE":
+                if cola:
+                    cola.pop(0)
+    print("Cola final:", cola)
+
+ejercicio 2
+
+def procesar_operaciones_pila(nombre_archivo):
+    pila = []
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            op = linea.strip().split()
+            if op[0] == "PUSH":
+                pila.append(op[1])
+            elif op[0] == "POP" and pila:
+                pila.pop()
+    print("Pila final:", pila)
+
+EJERCICIO 3 
 
