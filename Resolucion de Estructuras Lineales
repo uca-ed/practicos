@@ -29,3 +29,25 @@ def procesar_operaciones_pila(nombre_archivo):
 
 EJERCICIO 3 
 
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.siguiente = None
+
+class ListaSimple:
+    def __init__(self):
+        self.cabeza = None
+
+    def insertar(self, valor):
+        nuevo = Nodo(valor)
+        nuevo.siguiente = self.cabeza
+        self.cabeza = nuevo
+
+    def mostrar(self):
+        actual = self.cabeza
+        while actual:
+            print(actual.valor, end=" -> ")
+            actual = actual.siguiente
+        print("None")
+
+EJERCICIO 4
