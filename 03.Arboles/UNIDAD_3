@@ -1,0 +1,100 @@
+
+"""PRACTICA 3
+
+Árboles
+Dado un arreglo sobre el que está representado un árbol de grado indicado como dato, dar un algoritmo que: a) detecte la altura del árbol sin hacer recorridos
+"""
+
+import math
+
+def calcular_altura_arbol(cant_nodos, grado):
+    if grado == 1:
+        return cant_nodos
+    altura = math.floor(math.log((cant_nodos * (grado - 1)) + 1, grado))
+    return altura
+
+"""b) realice un barrido pre-orden"""
+
+def recorrer_preorden(nodos, grado, pos):
+    if pos >= len(nodos):
+        return
+    print(nodos[pos])
+    for posicion_siguiente in range(grado):
+        indice = grado * pos + posicion_sigueinte + 1
+        recorrer_preorden(nodos, grado, indice)
+
+"""EJERCICIO 2
+
+2. Crear un árbol AVL realizando las inserciones dadas en el archivo de datos
+"""
+
+def crear_nodo(clave):
+    return {'clave': clave, 'izq': None, 'der': None, 'altura': 1}
+def altura(nodo):
+    return nodo['altura'] if nodo else 0
+def actualizar_altura(nodo):
+    nodo['altura'] = 1 + max(altura(nodo['izq']), altura(nodo['der']))
+def balance(nodo):
+    return altura(nodo['izq']) - altura(nodo['der']) if nodo else 0
+
+def rotacion_derecha(y):
+    x = y['izq']
+    T2 = x['der']
+    x['der'] = y
+    y['izq'] = T2
+    actualizar_altura(y)
+    actualizar_altura(x)
+    return x
+
+def rotacion_izquierda(x):
+    y = x['der']
+    T2 = y['izq']
+    y['izq'] = x
+    x['der'] = T2
+    actualizar_altura(x)
+    actualizar_altura(y)
+    return y
+
+def insertar(nodo, clave):
+    if not nodo:
+        return crear_nodo(clave)
+    elif clave < nodo['clave']:
+        nodo['izq'] = insertar(nodo['izq'], clave)
+    else:
+        nodo['der'] = insertar(nodo['der'], clave)
+
+    actualizar_altura(nodo)
+    bal = balance(nodo)
+
+
+    if bal > 1 and clave < nodo['izq']['clave']:
+        return rotacion_derecha(nodo)
+    if bal < -1 and clave > nodo['der']['clave']:
+        return rotacion_izquierda(nodo)
+    if bal > 1 and clave > nodo['izq']['clave']:
+        nodo['izq'] = rotacion_izquierda(nodo['izq'])
+        return rotacion_derecha(nodo)
+    if bal < -1 and clave < nodo['der']['clave']:
+        nodo['der'] = rotacion_derecha(nodo['der'])
+        return rotacion_izquierda(nodo)
+
+    return nodo
+
+def imprimir_en_orden(nodo):
+    if nodo:
+        imprimir_en_orden(nodo['izq'])
+        print(nodo['clave'], end=' ')
+        imprimir_en_orden(nodo['der'])
+
+with open("arboles1.txt") as f:
+    contenido = f.read()
+    datos = [int(x.strip()) for x in contenido.split(',') if x.strip()]
+
+
+raiz = None
+for numero in datos:
+    raiz = insertar(raiz, numero)
+
+
+print("Árbol AVL en orden:")
+imprimir_en_orden(raiz)
