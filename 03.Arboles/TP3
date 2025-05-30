@@ -1,0 +1,122 @@
+#EJERCICIO 1
+
+import math
+
+def obtener_altura(cantidad_nodos,grado):
+    if grado==1:
+        return cantidad_nodos-1
+    altura = math.log((cantidad_nodos * (grado-1)) + 1, grado)
+    return int(altura)
+
+def recorrido_preorden_iterativo(nodos, grado):
+    resultado = []
+    pila = [0] 
+
+    while pila:
+        actual = pila.pop() 
+
+        if actual < len(nodos):
+            resultado.append(nodos[actual]) 
+
+            for k in range(grado -1, -1, -1): 
+                hijo_idx = actual * grado + (k + 1)
+                if hijo_idx < len(nodos):
+                    pila.append(hijo_idx)
+    return resultado
+
+arbol = [1, 2, 3, 4, 5, 6, 7]
+grado = 3
+
+altura = obtener_altura(len(arbol), grado)
+print("Altura del árbol:", altura)
+
+orden_preorden = recorrido_preorden_iterativo(arbol, grado)
+print("Recorrido preorden:", orden_preorden)
+
+
+#EJERCICIO 2
+
+with open("datos.txt", "w") as f:
+    f.write("\n".join(["30", "20", "40", "10", "25", "35", "50"]))
+
+def crear_nodo(valor):
+    return [valor, None, None, 1]
+
+def obtener_altura(nodo):
+    return nodo[3] if nodo else 0
+
+def calcular_factor_balance(nodo):
+    if not nodo:
+        return 0
+    return obtener_altura(nodo[1]) - obtener_altura(nodo[2])
+
+def actualizar_altura_nodo(nodo):
+    nodo[3] = 1+ max(obtener_altura(nodo[1]), obtener_altura(nodo[2]))
+
+def rotar_derecha(nodo_z):
+    nodo_y = nodo_z[1]
+    subarbol_t2 = nodo_y[2]
+
+    nodo_y[2] = nodo_z
+    nodo_z[1] = subarbol_t2
+
+    actualizar_altura_nodo(nodo_z)
+    actualizar_altura_nodo(nodo_y)
+    return nodo_y
+
+def rotar_izquierda(nodo_z):
+    nodo_y = nodo_z[2]
+    subarbol_t2 = nodo_y[1]
+
+    nodo_y[1] = nodo_z
+    nodo_z[2] = subarbol_t2
+
+    actualizar_altura_nodo(nodo_z)
+    actualizar_altura_nodo(nodo_y)
+    return nodo_y
+
+def insertar_en_avl(nodo_actual, nuevo_valor):
+    if not nodo_actual:
+        return crear_nodo(nuevo_valor)
+
+    if nuevo_valor < nodo_actual[0]:
+        nodo_actual[1] = insertar_en_avl(nodo_actual[1], nuevo_valor)
+    else:
+        nodo_actual[2] = insertar_en_avl(nodo_actual[2], nuevo_valor)
+
+    actualizar_altura_nodo(nodo_actual)
+    factor_balance = calcular_factor_balance(nodo_actual)
+
+    if factor_balance > 1 and nuevo_valor < nodo_actual[1][0]:
+        return rotar_derecha(nodo_actual)
+    if factor_balance < -1 and nuevo_valor > nodo_actual[2][0]:
+        return rotar_izquierda(nodo_actual)
+    if factor_balance > 1 and nuevo_valor > nodo_actual[1][0]:
+        nodo_actual[1] = rotar_izquierda(nodo_actual[1])
+        return rotar_derecha(nodo_actual)
+    if factor_balance < -1 and nuevo_valor < nodo_actual[2][0]:
+        nodo_actual[2] = rotar_derecha(nodo_actual[2])
+        return rotar_izquierda(nodo_actual)
+
+    return nodo_actual
+
+def recorrer_en_orden(nodo):
+    if nodo:
+        recorrer_en_orden(nodo[1])
+        print(nodo[0], end=" ")
+        recorrer_en_orden(nodo[2])
+
+def leer_valores_entrada(nombre_archivo):
+    with open(nombre_archivo, "r") as f:
+        return [int(linea.strip()) for linea in f]
+
+if __name__ == "__main__":
+    puntos_datos = leer_valores_entrada("datos.txt")
+    raiz_avl = None
+
+    for elemento in puntos_datos:
+        raiz_avl = insertar_en_avl(raiz_avl, elemento)
+
+    print("Recorrido inorden del arbol AVL:")
+    recorrer_en_orden(raiz_avl)
+    print()
