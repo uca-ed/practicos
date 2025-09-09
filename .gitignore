@@ -170,3 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 .ref*
+
+
+#lo agrego yo
+01.Grafos/archivos_ej2/03.json
