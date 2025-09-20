@@ -10,31 +10,43 @@ def crearMatrizVacia():
     grafo = {}
     for i in range(1,len(estructura['E'])+1):
         grafo[str(i)] = []
-        for j in range(len(estructura['E'][str(i)])):
+        for j in range(len(estructura['E']["1"])):
             grafo[str(i)].append('0')
     return grafo
 
-# EJ 1: MINIMALES GRAFO  (Algortimo Kruskal)
-# trabajo con 6 primeros nodos
-"""
-e = open('01.csv',"w")
-grafoMin = {}
-for i in range(1,7):
-    aristaMin = int(estructura['E']['{}'.format(i)][0])
-    print("Mi arista ahora es:",aristaMin)
-    for j in range(7):
-        if int(estructura['E']['{}'.format(i)][j]) < aristaMin:
-            aristaMin = int(estructura['E']['{}'.format(i)][j])
-            print("Hubo cambio de arista: ",i,",",j,":",aristaMin)
-    grafoMin[i] = aristaMin
-print(grafoMin)
+def esPrimo(num):
+    if num == 1:
+        return True
+    for k in range(2, round(int(num)/2) + 1):
+        if num % k == 0:
+            return False
+    return True
+
+def minimales():
+    # ====================     EJ 1: MINIMALES GRAFO     ====================
+    e = open('01.csv',"w")
+
+    # un minimal sera cada numero primo
+    # entonces busco numeros primos y los pongo en el grafo
+    grafo = crearMatrizVacia()
+    primos = []
+    # recorro primera fila de E (donde se guardan todos los numeros)
+    for i in estructura['E']['1']:
+        if esPrimo(int(i)):
+            primos.append(i)
+            grafo["1"][int(i)-1] = '1'
+    #agrego los nodos q faltan en el resto del grafo
+    for k in grafo:
+        if k in primos:
+            grafo[k][0] = '1'
+
+    escribirCSV(e,grafo)
+    e.close()
+
+# ====================     EJ 2: MAXIMOS GRAFO     ====================
+e = open('02.csv',"w")
+
 e.close()
-"""
-
-# EJ 2: MAXIMOS GRAFO
-#e = open('02.csv',"w")
-
-#e.close()
 
 def vecindadDer(nodo):
     # ====================     EJ 3: VECINDAD DERECHA DE UN NODO     ====================
@@ -50,7 +62,7 @@ def vecindadDer(nodo):
     for i in cadena:
         if i in estructura['E']:
             lst = []
-            for k in range(len(estructura['E'][i])):
+            for k in range(len(estructura['E']["1"])):
                 lst.append('1')
         grafo[i] = lst
         
@@ -69,12 +81,12 @@ def vecindadIzq(nodo):
                 if estructura['E'][str(i)][k] not in cadena:
                     cadena.append(estructura['E'][str(i)][k])
 
-    #creo grafo que represente los nodos vecinos derechos
+    #creo grafo que represente los nodos vecinos izquierdos
     grafo = crearMatrizVacia()
     for j in range(1,len(estructura['E'])+1):
         for m in range(len(estructura['E'][str(j)])):
             if estructura['E'][str(j)][m] in cadena:
-                grafo[str(j)][m] = 1
+                grafo[str(j)][m] = '1'
 
     escribirCSV(e,grafo)
     e.close()
