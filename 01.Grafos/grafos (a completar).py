@@ -1,5 +1,5 @@
 import json
-f = open('ed.json')
+f = open('01.json')
 estructura = json.load(f)
 
 def escribirCSV(arch,grafo):
@@ -106,3 +106,4 @@ print (estructura['E']['2'])
 """
 
 f.close()
+
