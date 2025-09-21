@@ -1,5 +1,5 @@
 import json
-f = open('01.json')
+f = open('ed.json')
 estructura = json.load(f)
 
 def escribirCSV(arch,grafo):
@@ -43,10 +43,26 @@ def minimales():
     escribirCSV(e,grafo)
     e.close()
 
-# ====================     EJ 2: MAXIMOS GRAFO     ====================
-e = open('02.csv',"w")
+def maximales():
+    # ====================     EJ 2: MAXIMOS GRAFO     ====================
+    e = open('02.csv',"w")
 
-e.close()
+    # un maximal sera cada multiplo "maximo"
+    # los busco
+    maximales = []
+    for i in estructura["E"]:
+        if estructura["E"][i][-1] not in maximales:
+            maximales.append(estructura["E"][i][-1])
+
+    # creo grafo con los datos obtenidos
+    grafo = crearMatrizVacia()
+    for j in range(1,len(estructura['E'])+1):
+            for m in range(len(estructura['E'][str(j)])):
+                if estructura['E'][str(j)][m] in maximales:
+                    grafo[str(j)][m] = '1'
+                    
+    escribirCSV(e,grafo)
+    e.close()
 
 def vecindadDer(nodo):
     # ====================     EJ 3: VECINDAD DERECHA DE UN NODO     ====================
@@ -91,19 +107,9 @@ def vecindadIzq(nodo):
     escribirCSV(e,grafo)
     e.close()
 
-"""
-==========   EJ EXPLICACION DE CODIGO   ==========
-
-# Imprimo los nodos que tienen vecindad derecha
-for i in estructura['E']:
-    print(i)
-
-# Imprimo la vecindad derecha de a
-print (estructura['E']['2'])
-
-# Imprimo la cardinalidad derecha de a
-
-"""
+minimales()
+maximales()
+vecindadDer("50")
+vecindadIzq("50")
 
 f.close()
-
