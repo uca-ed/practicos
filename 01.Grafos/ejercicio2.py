@@ -3,15 +3,26 @@
 # Luego, debe decidir si el grafo es un orden o es corresponde a una relación de equivalencia.
 
 import json
-import zipfile
 
-def leer_matriz(rutaZip,nombreArch):
-    with zipfile.ZipFile(rutaZip, "r") as z:
-        with z.open(nombreArch) as f:
-            datos = json.load(f)
-    return datos["P"]
-# VER BIEN ESTA FUNCION
+def crearMatrizAdyacencia(estructura):
+    nodos = estructura["P"]
+    arcos = estructura["E"]
+    
+    matriz = []
+    for i in nodos:
+        matAux = []
+        if i in arcos:
+            lst = estructura["E"][i]
+            for j in range(1,len(nodos)+1):
+                if str(j) in lst:
+                    matAux.append(1)
+                else:
+                    matAux.append(0)
+        else:
+            for k in range(len(nodos)): matAux.append(0)
+        matriz.append(matAux)
 
+    return matriz
 
 def reflexiva(matriz):
     n=len(matriz)
@@ -56,17 +67,14 @@ def comparable(matriz):
                     return False
     return True
 
-def esOrdenParcial(matriz):
+def esOrden(matriz):
     if reflexiva(matriz) and antisimetrica(matriz) and transitiva(matriz):
-        print("La matriz es reflexiva, antisimetrica y transitiva. Por ende es un orden parcial")
+        if comparable(matriz):
+            print("La matriz es reflexiva, antisimetrica, transitiva y comparable. Por ende es un orden total")
+        else:
+            print("La matriz es reflexiva, antisimetrica y transitiva. Por ende es un orden parcial")
     else:
-        print("La matriz no es un orden parcial")
-
-def esOrdenTotal(matriz):
-    if esOrdenParcial(matriz) and comparable(matriz):
-        print("Además, es comparable. Por ende es un orden total")
-    else:
-        print("La matriz no es un orden total")
+        print("La matriz no es un orden")
 
 def esEquivalencia(matriz):
     if reflexiva(matriz) and simetrica(matriz) and transitiva(matriz):
@@ -75,3 +83,14 @@ def esEquivalencia(matriz):
         print("La matriz no es una relacion de equivalencia")
 
 
+f = open('02.json')
+estructura = json.load(f)
+
+mat = crearMatrizAdyacencia(estructura)
+print("Reflexiva:",reflexiva(mat))
+print("Simetrica:",simetrica(mat))
+print("Antisimetrica:",antisimetrica(mat))
+print("Transitiva:",transitiva(mat))
+print("Comparable:",comparable(mat))
+esOrden(mat)
+esEquivalencia(mat)
