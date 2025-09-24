@@ -7,7 +7,6 @@ def leerCSV(nombre):
     with open(nombre, newline='') as csvfile:
         lector = csv.reader(csvfile)
         for fila in lector:
-            # Convertir cada elemento a int
             matriz.append([int(x) for x in fila])
     return matriz
 
@@ -74,9 +73,9 @@ def main():
     for i in estructura['E']:
         print(i)
     
-    # Vecindad derecha y cardinalidad del nodo 'a'
     print("Vecindad derecha de 'a':", estructura['E']["0"])
     print("Cantidad de vecinos de 'a':", len(estructura['E']["0"]))
 
 if __name__ == "__main__":
+
     main()
