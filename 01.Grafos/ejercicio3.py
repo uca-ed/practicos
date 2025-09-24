@@ -10,7 +10,6 @@ def cargar_grafo(nombre):
 
     grafo = {n: [] for n in nodos}
 
-    # aristas es un diccionario
     for u, vecinos in aristas.items():  
         for v in vecinos:
             if v in nodos:
@@ -42,7 +41,7 @@ def buscar_camino(grafo, inicio, fin):
     return []
 
 def main():
-    nombre_archivo = "archivos_ej3/multiplos200Ref.json"  # mismo directorio que el .py
+    nombre_archivo = "archivos_ej3/multiplos200Ref.json"  
     grafo = cargar_grafo(nombre_archivo)
     print("Nodos disponibles: ",list(grafo.keys()))
     inicio= input("Nodo de inicio: ")
@@ -59,6 +58,7 @@ def main():
         print("No existe camino entre ", inicio, " y ", fin)
 if __name__ == "__main__":
     main()
+
 
 
 
