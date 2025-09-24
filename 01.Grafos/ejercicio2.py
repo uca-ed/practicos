@@ -2,16 +2,10 @@ import json
 import sys
 
 def leerJSON(nombre):
-    """
-    Lee un archivo JSON y retorna:
-      - X: lista de elementos
-      - R: lista de pares (x,x) para cada elemento
-    """
     try:
         with open(nombre, 'r',encoding="utf-8") as f:
             estructura = json.load(f)
         X = estructura["P"]  # lista de elementos
-        # Generamos R como relación de igualdad (x se relaciona consigo mismo)
         R = []
         for origen, destinos in estructura["E"].items():
             for d in destinos:
@@ -92,4 +86,5 @@ def main():
     clasificar_relacion(X,R)
 
 if __name__ == '__main__':
+
     main()
