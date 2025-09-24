@@ -8,6 +8,7 @@
 
 import csv
 import os
+import json
 
 #carga:
 base = os.path.dirname(__file__)
@@ -15,12 +16,27 @@ ruta1 = os.path.join(base, "archivos_ej1", "01.csv")
 ruta2 = os.path.join(base, "archivos_ej1", "02.csv")
 ruta3 = os.path.join(base, "archivos_ej1", "03.csv")
 ruta4 = os.path.join(base, "archivos_ej1", "04.csv")
-
+ruta_json=os.path.join(base, "archivos_ej1", "01.json")
 
 matriz1 = []
 matriz2 = []
 matriz3 = []
 matriz4 = []
+with open(ruta_json, "r", encoding="utf-8") as f:
+    datos = json.load(f)
+
+nodos = datos["P"]        
+ady = datos["E"]        
+n = len(nodos)
+
+matriz = [[0]*n for _ in range(n)]
+mapa = {nodo: i for i, nodo in enumerate(nodos)}
+
+for origen, destinos in ady.items():
+    i = mapa[origen]
+    for dest in destinos:
+        j = mapa[dest]
+        matriz[i][j] = 1
 
 with open(ruta1, newline='', encoding='utf-8') as f:
     reader = csv.reader(f)
