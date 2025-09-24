@@ -19,8 +19,8 @@ class ColaSobreArreglo:
         if(self.estaFull()):
             print("Error, arreglo full")
         else:
-            self.data[(self.rear + 1)%self.tam] = ele
             self.rear = (self.rear + 1)%self.tam
+            self.data[self.rear] = ele
             print("enqueue: "+ str(ele))
 
     def dequeue(self):
