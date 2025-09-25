@@ -1,11 +1,7 @@
 
 import json
 
-# =========================
-# Lectura / Conversión
-# =========================
 
-# ESTO LO HIZO CHATGPT PARA ARMAR BIEN LA MATRIZ A PARTIR DEL JSON
 def leer_json(ruta_json):
     with open(ruta_json, encoding="utf-8") as f:
         est = json.load(f)
@@ -17,7 +13,6 @@ def leer_json(ruta_json):
     return P, E
 
 def matriz_desde_vecindad(P, E):
-    # Orden numérico si los nodos son "1","2",...; si no son dígitos, usa orden lexicográfico
     try:
         P_orden = sorted(P, key=lambda x: int(x))
     except:
@@ -33,8 +28,6 @@ def matriz_desde_vecindad(P, E):
                     j = pos[w]
                     A[i][j] = 1
     return P_orden, A
-
-#hasta aca hizo chatgpt junto al main para armar la matriz
 
 
 # la matriz es reflexiva si cada elemento se relaciona consigo mismo, es decir veo la diagonal
@@ -95,11 +88,9 @@ def clasificar_relacion(A):
         "equivalencia": es_equivalencia
     }
 
-# =========================
-# Ejemplos de uso
-# =========================
+
+# Tuvimos problemas para la lectura del archivo ya q es muy grande asi q nos quedo la funcion de abajo
 if __name__ == "__main__":
-    # ---- Caso JSON (nota) ----
     print("GRAFO 01.JSON")
     ruta_json = r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej2\01.json"
     try:
@@ -136,3 +127,4 @@ if __name__ == "__main__":
         print()
     except FileNotFoundError:
         print("No se encontró el JSON (ajustá la ruta).")
+    print("INTEGRANTES GRUPO: JUAN FEDERICO ROSENFELD, IGNACIO GONZALEZ IÑIGO Y NICOLAS LUCINI")

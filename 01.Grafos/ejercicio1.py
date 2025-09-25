@@ -1,69 +1,35 @@
 import json
 
+def leerjson():
+    f = open(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\01.json")
+    estructura = json.load(f)
+    f.close()
+    MJSON=[]
+    f=0
+    for i in estructura['P']:
+        MJSON.append([])
+        for j in estructura['P']:
+            if j in estructura['E'][i]:
+                MJSON[f].append(1)
+            else:
+                MJSON[f].append(0)
+        f+=1
+    return MJSON
 
-print("===== ARCHIVO JSON =====")
-f = open(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\01.json")
-
-estructura = json.load(f)
-
-print("VECINDAD DERECHA DEL NODO 1500:")
-print(estructura['E']["1500"])
-
-print("VECINDAD IZQUIERDA DEL NODO 1500:")
-vecIzq = []
-for v in estructura['E']:                
-    for u in estructura['E'][v]:             
-        if u == "1500":      
-            vecIzq.append(v)
-print(vecIzq )
-
-# Minimales del grafo son los vertices sin aristas de entrada
-nodosMinimales = []
-for v in estructura['E']:                 # recorro cada nodo
-    es_minimal = True
-    for u in estructura['E']:             # miro todos los demás
-        if v in estructura['E'][u]:       # si alguien apunta a v
-            es_minimal = False
+def leer_csv(ruta):
+    f=open(ruta,'r')
+    M=[]
+    while True:
+        line=f.readline()
+        if not line:
             break
-    if es_minimal:
-        nodosMinimales.append(v)
+        strline=line.strip().split(',')
+        for i in range(0,len(strline)):
+            strline[i]=int(strline[i])
+        M.append(strline)
+    return M
 
-print("NODOS MINIMALES: ")
-print(nodosMinimales)
-
-# Maximales del grafo son los vertices sin aristas de salida
-nodosMaximales = []
-for i in estructura['E']:        #recorro cada nodo
-    if len(estructura['E'][i]) == 0:   #si la vecindad derecha del nodo es cero => es maximal
-        nodosMaximales.append(i)
-
-print("NODOS MAXIMALES: ")
-print(nodosMaximales)
-
-f.close()
-print("===== FIN ARCHIVO JSON =====")
-print("\n")
-print("===== ARCHIVO CSV =====")
-
-matriz = []
-with open(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\02.csv", encoding="utf-8") as f:
-    for linea in f:
-        # Elimino salto de línea y espacios
-        linea = linea.strip()
-        if not linea:   # si la línea está vacía, la salto
-            continue
-        # Divido por comas y convierto cada valor a entero
-        fila = [int(x) for x in linea.split(",")]
-        matriz.append(fila)
-
-print("Matriz leida:")
-for fila in matriz:  
-    print(fila)
-
-
-print("VECINDAD DERECHA DE CADA NODO")
-
-def vecindadDerecha(nodo):
+def vecindadDerecha(matriz, nodo):
     idx = nodo - 1
     vecinos = []
     for j in range(len(matriz)):
@@ -71,33 +37,13 @@ def vecindadDerecha(nodo):
             vecinos.append(j+1)
     return vecinos
 
-print("VECINDAD DERECHA DE NODO 1:", vecindadDerecha(1))
-print("VECINDAD DERECHA DE NODO 2:", vecindadDerecha(2))
-print("VECINDAD DERECHA DE NODO 3:", vecindadDerecha(3))
-print("VECINDAD DERECHA DE NODO 4:", vecindadDerecha(4))
-print("VECINDAD DERECHA DE NODO 5:", vecindadDerecha(5))
-print("VECINDAD DERECHA DE NODO 6:", vecindadDerecha(6))
-
-
-
-
-print("VECINDAD IZQUIERDA DE CADA NODO")
-def vecindadIzquierda(nodo):
+def vecindadIzquierda(matriz, nodo):
     idx = nodo - 1
     vecinos = []
-    i=0
-    while i < len(matriz):
+    for i in range(len(matriz)):
         if matriz[i][idx] == 1:
             vecinos.append(i+1)
-        i+=1
     return vecinos
-
-print("VECINDAD IZQUIERDA DE NODO 1:", vecindadIzquierda(1))
-print("VECINDAD IZQUIERDA DE NODO 2:", vecindadIzquierda(2))
-print("VECINDAD IZQUIERDA DE NODO 3:", vecindadIzquierda(3))
-print("VECINDAD IZQUIERDA DE NODO 4:", vecindadIzquierda(4))
-print("VECINDAD IZQUIERDA DE NODO 5:", vecindadIzquierda(5))
-
 
 def minimales_matriz(matriz):
     n = len(matriz)
@@ -115,10 +61,53 @@ def maximales_matriz(matriz):
             res.append(i+1)
     return res
 
-print("NODOS MINIMALES:", minimales_matriz(matriz))
-print("NODOS MAXIMALES:", maximales_matriz(matriz))
+
+def main():
+    MJSON = leerjson()
+    M1 = leer_csv(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\01.csv")
+    M2 = leer_csv(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\02.csv")
+    M3 = leer_csv(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\03.csv")
+    M4 = leer_csv(r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej1\04.csv")
+
+    print("===== ARCHIVO 01.json =====")
+
+    print("NODOS MINIMALES:", minimales_matriz(MJSON))
+    print("NODOS MAXIMALES:", maximales_matriz(MJSON))
+    print("\nVecindades en JSON:")
+    for nodo in range(1, len(MJSON)+1):
+        print(f"Nodo {nodo}: VD={vecindadDerecha(MJSON, nodo)}, VI={vecindadIzquierda(MJSON, nodo)}")
+
+    print("\n===== ARCHIVO 01.csv =====")
+
+    print("NODOS MINIMALES:", minimales_matriz(M1))
+    print("NODOS MAXIMALES:", maximales_matriz(M1))
+    for nodo in range(1, len(M1)+1):
+        print(f"Nodo {nodo}: VD={vecindadDerecha(M1, nodo)}, VI={vecindadIzquierda(M1, nodo)}")
+
+    print("\n===== ARCHIVO 02.csv =====")
+
+    print("NODOS MINIMALES:", minimales_matriz(M2))
+    print("NODOS MAXIMALES:", maximales_matriz(M2))
+    for nodo in range(1, len(M2)+1):
+        print(f"Nodo {nodo}: VD={vecindadDerecha(M2, nodo)}, VI={vecindadIzquierda(M2, nodo)}")
+
+    print("\n===== ARCHIVO 03.csv =====")
+
+    print("NODOS MINIMALES:", minimales_matriz(M3))
+    print("NODOS MAXIMALES:", maximales_matriz(M3))
+    for nodo in range(1, len(M3)+1):
+        print(f"Nodo {nodo}: VD={vecindadDerecha(M3, nodo)}, VI={vecindadIzquierda(M3, nodo)}")
+    print("\n===== ARCHIVO 04.csv =====")
+
+    print("NODOS MINIMALES:", minimales_matriz(M4))
+    print("NODOS MAXIMALES:", maximales_matriz(M4))
+    for nodo in range(1, len(M4)+1):
+        print(f"Nodo {nodo}: VD={vecindadDerecha(M4, nodo)}, VI={vecindadIzquierda(M4, nodo)}")
+
+    
 
 
 
+    print("INTEGRANTES GRUPO: JUAN FEDERICO ROSENFELD, IGNACIO GONZALEZ IÑIGO Y NICOLAS LUCINI")
 
-print("===== FIN ARCHIVO CSV =====")
+main()

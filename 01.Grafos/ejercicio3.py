@@ -1,80 +1,107 @@
-
 import json
-from collections import deque
 
-#Esta funcion la hizo chatgpt
-def cargar_grafo(ruta_archivo):
-    """
-    Retorna:
-        dict: diccionario con las vecindades derechas del grafo
-              (estructura["E"]).
-    """
-    with open(ruta_archivo, "r", encoding="utf-8") as f:
-        estructura = json.load(f)
-    return estructura["E"]
+# =========================
+# Lectura / Conversión
+# =========================
 
+def leerjosn(ruta):
+    with open(ruta, encoding="utf-8") as fi:
+        estructura = json.load(fi)
 
-def obtener_camino(vecindades, origen, destino):
-    """
-    Parámetros:
-        vecindades (dict): diccionario {nodo: [vecinos]} con la lista de adyacencia del grafo.
-        origen (str): nodo de partida.
-        destino (str): nodo de llegada.
+    nodos = estructura['P']
+    indice = {nodo: idx for idx, nodo in enumerate(nodos)} 
+    n = len(nodos)
 
-    Retorna:
-        list o None: lista con el camino [origen, ..., destino] si existe, o None si no hay camino.
-    """
-    # Cola para recorrer el grafo en anchura
-    cola = deque([origen])
+    adyacencia = {u: set(estructura['E'].get(u, [])) for u in nodos}
 
-    # Conjunto de visitados para no repetir nodos
-    visitados = set([origen])
+    M = [[0]*n for _ in range(n)]
+    for u in nodos:
+        i = indice[u]
+        for v in adyacencia[u]:
+            if v in indice:          
+                j = indice[v]
+                M[i][j] = 1
 
-    # Diccionario de padres: cada nodo apunta a su predecesor
-    padres = {origen: None}
+    return M
 
-    # Bucle principal BFS
-    while cola:
-        actual = cola.popleft()  # saco el primer elemento
-        if actual == destino:    # si llegamos al destino, terminamos
-            break
-        for vecino in vecindades.get(actual, []):
-            if vecino not in visitados:
-                visitados.add(vecino)
-                padres[vecino] = actual
-                cola.append(vecino)
+def vecinos_izquierda(M, z):
 
-    # Reconstrucción del camino si se llegó al destino
-    if destino not in padres:
-        return None  # no hay camino
+    j = z - 1
+    v_izq = []
+    for i in range(len(M)):
+        if M[i][j] != 0:       
+            v_izq.append(i + 1)
+    return v_izq
 
+def vecinos_derecha(M, z):
+    
+    i = z - 1
+    v_der = []
+    for j in range(len(M[0])):
+        if M[i][j] != 0:        
+            v_der.append(j + 1)
+    return v_der
+
+# =========================
+# BFS de paso (camino)
+# =========================
+
+def reconstruir_camino(CLOSED, inicio, fin):
     camino = []
-    nodo = destino
-    while nodo is not None:
-        camino.append(nodo)
-        nodo = padres[nodo]
-    camino.reverse()
-    return camino
+    actual = fin
+    while actual is not None:
+        camino.append(actual)
+        pred = None
+        for (n, p) in CLOSED:
+            if n == actual:
+                pred = p
+                break
+        actual = pred
+    return list(reversed(camino))
+
+def buscar_paso(M, a, b):
+    OPEN = [(a, None)]   # cola FIFO de (nodo, padre)
+    CLOSED = []          # visitados
+
+    while OPEN:
+        (z, padre) = OPEN.pop(0)   # desencolo
+        CLOSED.append((z, padre))
+
+        # sucesores de z
+        sucesores = vecinos_derecha(M, z)
+
+        if b in sucesores:
+            CLOSED.append((b, z))
+            return reconstruir_camino(CLOSED, a, b)
+
+        # evitar revisitar
+        visitados = {n for (n, _) in OPEN} | {n for (n, _) in CLOSED}
+
+        # encolo sucesores no visitados
+        for w in sucesores:
+            if w not in visitados:
+                OPEN.append((w, z))
+
+    # sin camino
+    print(f"No hay camino de {a} a {b}.")
+    return None
+
 
 
 def main():
-    
-    ruta = r"C:\Users\Fede\Documents\GitHub\practicos\01.Grafos\archivos_ej3\esDivisorDe-200.json"
+    M1 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/esDivisorDe-200.json')
+    M2 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/esDivisorDe-200.json')
+    M3 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/esDivisorDe-200.json')
+    M4 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/multiplos200Ref.json')
+    M5 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/multiplos2000Ref.json')
+    M6 = leerjosn('C:/Users/Fede/Documents/GitHub/practicos/01.Grafos/archivos_ej3/multiplos20000Ref.json')
 
-    # Nodos de origen y destino como strings, porque así vienen en los JSON
-    origen = "1"
-    destino = "54"
+    print(buscar_paso(M1, 3, 20))
+    print(buscar_paso(M2, 5, 120))
+    print(buscar_paso(M3, 5, 120))
+    print(buscar_paso(M4, 5, 120))
+    print(buscar_paso(M5, 5, 120))
+    print(buscar_paso(M6, 5, 120))
+    print("INTEGRANTES GRUPO: JUAN FEDERICO ROSENFELD, IGNACIO GONZALEZ IÑIGO Y NICOLAS LUCINI")
 
-    # Cargo el grafo y ejecuto la búsqueda
-    grafo = cargar_grafo(ruta)
-    camino = obtener_camino(grafo, origen, destino)
-
-    # Salida
-    if camino:
-        print("Camino encontrado:", " -> ".join(camino))
-    else:
-        print(f"No existe camino entre {origen} y {destino}")
-
-
-if __name__ == "__main__":
-    main()
+main()
