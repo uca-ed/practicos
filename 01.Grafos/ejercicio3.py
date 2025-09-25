@@ -1,9 +1,5 @@
 import json
 
-# =========================
-# Lectura / Conversión
-# =========================
-
 def leerjosn(ruta):
     with open(ruta, encoding="utf-8") as fi:
         estructura = json.load(fi)
@@ -42,9 +38,6 @@ def vecinos_derecha(M, z):
             v_der.append(j + 1)
     return v_der
 
-# =========================
-# BFS de paso (camino)
-# =========================
 
 def reconstruir_camino(CLOSED, inicio, fin):
     camino = []
