@@ -1,18 +1,14 @@
 import json
 
-#Codigo entregado por el Profesor para leer archivos .json
+def lecturaJson():
+    f = open('nombreArchivo.json')
+    estructura = json.load(f)
+    grafo = estructura['E']
+    print("Nodos: ")
+    for i in grafo:
+        print(i)
 
-# Leer el archivo JSON con el código obligatorio
-f = open('nombreArchivo.json')
-estructura = json.load(f)
-grafo = estructura['E']
-
-# Imprime los nodos Para una mejor vista
-print("Nodos: ")
-for i in grafo:
-    print(i)
-
-f.close()
+    f.close()
 
 
 def es_reflexivo(grafo):
@@ -45,6 +41,7 @@ def es_transitivo(grafo):
 
 
 def main():
+    lecturaJson()
     ("\nPropiedades del grafo:")
     reflexivo = es_reflexivo(grafo)
     simetrico = es_simetrico(grafo)
@@ -62,4 +59,5 @@ def main():
         print("\nEl grafo representa una relación de orden.")
     else:
         print("\nEl grafo no representa ni una relación de equivalencia ni de orden.")
+
 main()
