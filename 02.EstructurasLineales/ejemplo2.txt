@@ -1,0 +1,7 @@
+PUSH 5
+PUSH 3
+PUSH 2
+PUSH *
+PUSH +
+PUSH 4
+PUSH /
