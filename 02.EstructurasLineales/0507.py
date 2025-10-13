@@ -59,8 +59,9 @@ def TSort(P, E):
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    estructura = abrirJson("02.EstructurasLineales\ej4-grafosPrueba\lineal.json")
+    estructura = abrirJson("02.EstructurasLineales\ej0507-grafosPrueba\lineal.json")
     P = estructura["P"]
     E = estructura["E"]
     TSort(P, E)
+
 
