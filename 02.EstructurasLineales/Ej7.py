@@ -7,11 +7,11 @@ def procesarGrafoJson(archivo):
     visitado = []
     enCamino = []
     pila = []
-    hayCiclo = [False]
+    hayCiclo = False
 
     def dfs(nodo):
         if nodo in enCamino:
-            hayCiclo[0] = True
+            hayCiclo = True
             return
         if nodo in visitado:
             return
@@ -30,7 +30,7 @@ def procesarGrafoJson(archivo):
     for k, v in grafo.items():
         print(f"{k}: {v}")
 
-    if hayCiclo[0]:
+    if hayCiclo:
         print("El grafo es ciclico. No se puede generar un orden topologico.")
     else:
         print("Orden topologico:", pila)
@@ -47,5 +47,6 @@ def main():
 
     print("\nGrafo Ciclico")
     procesarGrafoJson("grafoC.json")
+
 
 main()
