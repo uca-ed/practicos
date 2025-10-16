@@ -46,12 +46,12 @@ capacidad=[0]*N
 inscriptos=[0]*N
 
 def cargaDatos(e,p,al,au,b):
-    i=0
     for e in range(E):
         for p in range(P):
             for al in range(AL):
                 for au in range(AU):
                     for b in range(B):
+                        i=indice(e,p,al,au,b)
                         capacidad[i] = int(input(f"Capacidad edificio {e}, piso {p}, ala {al}, aula {au}, bloque {b}: "))
                         inscriptos[i] = int(input(f"Inscriptos edificio {e}, piso {p}, ala {al}, aula {au}, bloque {b}: "))
                         i+=1
@@ -61,11 +61,13 @@ def cargaDatos(e,p,al,au,b):
 def mayorOcupacion(e,p,al,au,b):
     res = (0,0,0,0,0,0,0)
     i=0
+    mayor=0
     for e in range(E):
         for p in range(P):
             for al in range(AL):
                 for au in range(AU):
                     for b in range(B):
+                        i=indice(e,p,al,au,b)
                         cap=capacidad[i]
                         ins=inscriptos[i]
                         if cap>0:
@@ -73,7 +75,11 @@ def mayorOcupacion(e,p,al,au,b):
                             if porcentaje>mayor:
                                 mayor=porcentaje
                                 res=(e,p,al,au,b,ins,cap)
-                        i+=1
+                        
+    e,p,al,au,b,ins,cap=res
+    print(f"Edificio {e}, Piso {p}, Aula {au}, Bloque {b}")
+    print(f"Inscriptos:{ins}/Capacidad:{cap} -> {(mayor*100,2)}%")
+  
 
 #promedio de alumos por piso en el bloque 
 def promedio(bloque):
