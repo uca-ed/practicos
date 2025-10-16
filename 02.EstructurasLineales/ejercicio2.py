@@ -26,7 +26,7 @@ class PilaTamañoFijo:
         return valor
     
 def main():
-    with open('datos_cola.csv', newline='') as archivo_csv:
+    with open('datos.csv', newline='') as archivo_csv:
         lector_csv = csv.reader(archivo_csv)
         datos = []
         lector_csv = csv.reader(archivo_csv)
@@ -47,7 +47,7 @@ def main():
         print(f"\nP <-- Resultado: {animales.push(datos.pop(0))}")
 
         print("\nValores dentro de la pila: ")
-        animales.imprimir() # haciendo trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
+        animales.imprimir() # haciendo trampa 
         print()
 
         print("\Desapilo hasta que quede vacía: ")

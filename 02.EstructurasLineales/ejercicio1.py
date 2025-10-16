@@ -31,8 +31,8 @@ class ColaTamañoFijo:
         return valor
     
 
-def main():
-    with open('datos_cola.csv', newline='') as archivo_csv:
+def main():    
+    with open('datos.csv', newline='') as archivo_csv:
         lector_csv = csv.reader(archivo_csv)
         datos = []
         lector_csv = csv.reader(archivo_csv)
@@ -53,7 +53,7 @@ def main():
         print(f"\nQ <-- Resultado: {animales.encolar(datos.pop(0))}")
 
         print("\nValores dentro de la cola: ")
-        animales.imprimir() # haciendo trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
+        animales.imprimir() # haciendo trampa 
         print()
 
         print("\nDesencolo hasta que quede vacía: ")

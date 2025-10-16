@@ -62,7 +62,7 @@ def radixSortABC(lista):
 
 
 def main():
-    with open('datos_radix.csv', newline='') as archivo_csv:
+    with open('datos.csv', newline='') as archivo_csv:
         lista = []
         lector_csv = csv.reader(archivo_csv)
         for palabra in list(lector_csv): # una lista de python con 
@@ -73,4 +73,6 @@ def main():
         print(f"\nradix sort:        {ordenada}")
         print()
         
+        
+print("Ejercicio 4 - Radiz sort\n")
 main()
