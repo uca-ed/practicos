@@ -18,44 +18,29 @@ def cargar_grafo_csv_matriz(ruta_csv):
 
     return {"P": P, "E": E}
 
-def obtener_minimales(P, E):
-    # Calcula los nodos que no tienen aristas entrantes
-    con_entradas = set()
-    for vecinos in E.values():
-        for v in vecinos:
-            if v in P:  # solo considerar nodos aún no procesados
-                con_entradas.add(v)
-    return sorted([v for v in P if v not in con_entradas])  # min(G)
-
-
 def t_sort(G):
     P = G["P"][:]
-    E = {k: v[:] for k, v in G["E"].items()}  # copia
-    ST = []  # secuencia topológica
-
-    # Calcular grado de entrada inicial
+    E = {k: v[:] for k, v in G["E"].items()} 
+    ST = []  
+    
     indegree = {n: 0 for n in P}
     for vecinos in E.values():
         for v in vecinos:
             indegree[v] += 1
 
-    # Q <- nodos minimales (indegree 0)
     Q = deque([n for n in P if indegree[n] == 0])
 
     while Q:
         X = Q.popleft()
         ST.append(X)
 
-        # Eliminar X de P
         P.remove(X)
 
-        # Disminuir indegree de sus vecinos y añadirlos a Q si indegree=0
         for vecino in E[X]:
             indegree[vecino] -= 1
             if indegree[vecino] == 0:
                 Q.append(vecino)
 
-        # Eliminar X de E (opcional, solo para limpiar)
         E.pop(X)
 
     if P:
@@ -72,3 +57,4 @@ t_sort(estructura)
 estructura = cargar_grafo_csv_matriz('02.csv')
 
 t_sort(estructura)
+
