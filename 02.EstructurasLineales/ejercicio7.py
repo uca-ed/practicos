@@ -84,9 +84,17 @@ def encontrar_ciclo(E):
     return None
 
 
-# Pruebas
-estructura = cargar_grafo_csv_aristas("02.EstructurasLineales/grafo_dag.csv")
-t_sort(estructura)
+def main():
 
-estructura = cargar_grafo_csv_aristas("02.EstructurasLineales/grafo_ciclo.csv")
-t_sort(estructura)
+    print("\nEjemplo 1--")
+    # Pruebas
+    estructura = cargar_grafo_csv_aristas("./grafo_dag.csv")
+    t_sort(estructura)
+
+    print("\nEjemplo 2--")
+    estructura = cargar_grafo_csv_aristas("./grafo_ciclo.csv")
+    t_sort(estructura)
+
+print("\nEjercicio 7 - tsort 2")
+main()
+print()

@@ -38,13 +38,12 @@ def main():
         lector_csv = csv.reader(archivo_csv)
         for palabra in list(lector_csv): # una lista de python con 
             datos.append(palabra[0])
-        print(f"Utilizo los valores de la siguiente lista:")
+        print(f"\nUtilizo los valores de la siguiente lista:\n")
         for dato in datos:
             print(dato)
 
         animales = ColaTamañoFijo(5)
 
-        print("\nEjercicio 1 : Cola sobre arreglo\n")
 
         print("\nEncolo valores (0: encolado | -1: cola llena): ")        
         for dato in datos:
@@ -67,7 +66,7 @@ def main():
             print(f"\nHay un error: {e}") # -> La cola está vacía
         
 
-
+print("\nEjercicio 1 : Cola sobre arreglo\n")
 main()
 print()
 

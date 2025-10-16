@@ -32,15 +32,14 @@ def main():
         lector_csv = csv.reader(archivo_csv)
         for palabra in list(lector_csv): # una lista de python con 
             datos.append(palabra[0])
-        print(f"Utilizo los valores de la siguiente lista:")
+        print(f"\nUtilizo los valores de la siguiente lista:\n")
         for dato in datos:
             print(dato)
 
         animales = PilaTamañoFijo(5)
 
-        print("\nEjercicio 2 : Pila sobre arreglo\n")
         
-        print("\Apilo valores (0: apilado | -1: pila llena): ")        
+        print("\nApilo valores (0: apilado | -1: pila llena): ")        
         for dato in datos:
             print(f"\nP <-- Resultado: {animales.push(datos.pop(0))}")
             animales.imprimir() # haciendo trampa
@@ -62,6 +61,6 @@ def main():
             
             
             
-
+print("\nEjercicio 2 : Pila sobre arreglo\n")
 main()
 print()

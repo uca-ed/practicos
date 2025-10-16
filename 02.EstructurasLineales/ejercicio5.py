@@ -50,11 +50,16 @@ def t_sort(G):
         print("Orden topológico:", ST)
         return ST
     
-estructura = cargar_grafo_csv_matriz('01.csv')
+    
+def main():
+    print("\nEJEMPLO 1:")
+    estructura = cargar_grafo_csv_matriz('01.csv')
+    t_sort(estructura)
 
-t_sort(estructura)
+    print("\nEJEMPLO 2:")
+    estructura = cargar_grafo_csv_matriz('02.csv')
+    t_sort(estructura)
 
-estructura = cargar_grafo_csv_matriz('02.csv')
-
-t_sort(estructura)
-
+print("\nEjercicio 5  - sort topológico")
+main()
+print()
