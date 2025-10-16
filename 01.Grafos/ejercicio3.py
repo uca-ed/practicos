@@ -30,7 +30,7 @@ def vecinos_izquierda(M, z):
     return v_izq
 
 def vecinos_derecha(M, z):
-    
+
     i = z - 1
     v_der = []
     for j in range(len(M[0])):

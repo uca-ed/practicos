@@ -104,7 +104,7 @@ def main():
     for nodo in range(1, len(M4)+1):
         print(f"Nodo {nodo}: VD={vecindadDerecha(M4, nodo)}, VI={vecindadIzquierda(M4, nodo)}")
 
-    
+
 
 
 
