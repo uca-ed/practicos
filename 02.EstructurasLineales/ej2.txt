@@ -1,0 +1,9 @@
+// Empieza vacía
+PUSH A
+APILAR 10
+PUSH "hola mundo"
+POP
+PUSH 3.14
+DESAPILAR
+APILAR B
+PUSH C
