@@ -85,34 +85,23 @@ def aulaConMayorPorcentajeDeOcupacion(capacidad,inscriptos):
     alas = 2
     aulas = 25
     bloques = 17 * 5 # 17 bloques por dia; 5 dias
-    
-    totalidadDeAulas = edificios*pisos*alas*aulas
-    
+        
     maximoPorcentaje = (0,0,0,0,0) # tupla con (edificio, piso, ala, aula, porcentaje)
-
-    for d in range(aulas):
-        porcentaje = 0
-        for a in range(edificios):
-            for b in range(pisos):
-                for c in range(alas):
-                    for e in range(bloques):
-                        porcentaje += int(inscriptos.ver(a,b,c,d,e)) / (int(capacidad.ver(a,b,c,d,e)) * bloques)
-        porcentaje /= totalidadDeAulas
-        if porcentaje > maximoPorcentaje[4]:
-            maximoPorcentaje = (a,b,c,d, porcentaje)
-            
-    '''        
+    
     for a in range(edificios):
         for b in range(pisos):
             for c in range(alas):
                 for d in range(aulas):
                     porcentaje = 0
                     for e in range(bloques):
-                        porcentaje += int(inscriptos.ver(a,b,c,d,e)) / (int(capacidad.ver(a,b,c,d,e)) )
-                    porcentaje /= totalidadDeAulas
+                        cap = capacidad.ver(a,b,c,d,e)
+                        ins = inscriptos.ver(a,b,c,d,e)
+                        por= int(ins)/int(cap) # porcentaje de ocupacion en 1 bloque horario de un aula
+                        porcentaje += por
+                    porcentaje /= bloques
                     if porcentaje > maximoPorcentaje[4]:
-                        maximoPorcentaje = (a,b,c,d, porcentaje)
-                        '''
+                        maximoPorcentaje = (a,b,c,d,porcentaje)
+
     return maximoPorcentaje
 
 def bloqueConMayorPorcentajeDeOcupacion(capacidad,inscriptos):
@@ -132,12 +121,46 @@ def bloqueConMayorPorcentajeDeOcupacion(capacidad,inscriptos):
             for b in range(pisos):
                 for c in range(alas):
                     for d in range(aulas):
-                        porcentaje += int(inscriptos.ver(a,b,c,d,e)) / (int(capacidad.ver(a,b,c,d,e)))
-        porcentaje /= bloques
+                        cap = capacidad.ver(a,b,c,d,e)
+                        ins = inscriptos.ver(a,b,c,d,e)
+                        por= int(ins)/int(cap) # porcentaje de ocupacion en 1 bloque horario de un aula
+                        porcentaje += por
+        porcentaje /= totalidadDeAulas
         if porcentaje > maximoPorcentaje[1]:
-            maximoPorcentaje = (e, porcentaje)
+            maximoPorcentaje = (e,porcentaje)
                         
     return maximoPorcentaje
+
+def promedioDeAlumnos(capacidad, inscriptos, piso, bloque):
+    edificios = 4
+    alas = 2
+    aulas = 25    
+    
+    promedio = 0
+    
+    for a in range(edificios):
+        for c in range(alas):
+            for d in range(aulas):
+                cap = capacidad.ver(a,piso,c,d,bloque)
+                ins = inscriptos.ver(a,piso,c,d,bloque)
+                por= int(ins)/int(cap)
+                promedio += por
+                
+    promedio /= edificios*alas*aulas
+    return promedio
+
+
+def cantidadDeAlumnosPorAula(inscriptos, edificio, piso, ala, bloque):
+    aulas = 25
+    
+    alumnosPorAula = 0
+    
+
+    for d in range(aulas):
+        ins = inscriptos.ver(edificio,piso,ala,d,bloque)
+        alumnosPorAula += int(ins)
+            
+    return alumnosPorAula
 
 def main():
     edificios = 4
@@ -147,7 +170,7 @@ def main():
     bloques = 17 * 5 # 17 bloques por dia; 5 dias
     
     # SI NO TENES LAS TABLAS CORRÉ ESTO 1 VEZ PARA CREAR LOS ARCHIVOS CON LOS DATOS
-    crearValoresRandomCapacidadInscriptos(30,20) 
+    crearValoresRandomCapacidadInscriptos(30,15) 
 
     INSCRIPTOS = Matriz5D(edificios,pisos,alas,aulas,bloques)
     CAPACIDAD = Matriz5D(edificios,pisos,alas,aulas,bloques)
@@ -178,16 +201,28 @@ def main():
     #print("\nMatriz de INSCRIPTOS:\n")
     #INSCRIPTOS.imprimirMatriz()
     
-    #da cualquier cosa
     (mpEdificio, mpPiso, mpAla, mpAula, mpPorcentaje) = aulaConMayorPorcentajeDeOcupacion(CAPACIDAD,INSCRIPTOS)
     print("El aula con maximo porcentaje de ocupacion entre todos sus bloques horarios es:")
     print(f"Edificio: {mpEdificio} Piso: {mpPiso} Ala: {"Norte" if mpAla == 0 else "Sur"} Aula: {mpAula} ")
     print(f"Porcentaje de ocupación: {int(mpPorcentaje*100)} %")
     
-     #da cualquier cosa
     (mpBloque,mpPorcentaje) = bloqueConMayorPorcentajeDeOcupacion(CAPACIDAD,INSCRIPTOS)
     print("\nEl bloque horario con maximo porcentaje de ocupacion es:")
-    print(f"Bloque: {mpBloque//5} Dia: {mpBloque%5 + 1} Porcentaje de ocupación: {int(mpPorcentaje*100)} %")
+    print(f"Bloque horario: {mpBloque} Porcentaje de ocupación: {int(mpPorcentaje*100)} %")
+    
+    bloqueX = random.randint(0,bloques-1)
+    print(f"\nEl porcentaje de ocupación de las aulas para el bloque {bloqueX} es:")
+    for pisoX in range(pisos):
+        print(f"En el piso: {pisoX} el porcentaje: {int(promedioDeAlumnos(CAPACIDAD,INSCRIPTOS,pisoX,bloqueX) * 100)}%")
+    
+    edificioX = random.randint(0,edificios-1)
+    pisoX = random.randint(0,pisos-1)
+    bloqueX = random.randint(0,bloques-1)
+    for ala in range(alas):
+        print(f"\nPara el ala {"NORTE" if ala else "SUR"} :")
+        print(f"En el edificio {edificioX} piso {pisoX} bloque horario {bloqueX},")
+        print(f"hay {cantidadDeAlumnosPorAula(INSCRIPTOS,edificioX,pisoX,ala,bloqueX)} alumnos.")
+        
     
 
 print("\nEjercicio 6 - Matriz de N dimensiones sobre arreglos 1D")
