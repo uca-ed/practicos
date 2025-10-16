@@ -1,0 +1,20 @@
+{
+    "abc": {
+      "tipo": ["fuego", "agua", "tierra", "aire"],
+      "nivel": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "elementos": [
+      ["agua", 3],
+      ["fuego", 1],
+      ["tierra", 5],
+      ["aire", 2],
+      ["fuego", 9],
+      ["tierra", 1],
+      ["agua", 8],
+      ["aire", 7],
+      ["fuego", 3],
+      ["tierra", 2],
+      ["agua", 4]
+    ]
+  }
+  
