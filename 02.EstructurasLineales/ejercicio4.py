@@ -1,3 +1,5 @@
+import csv
+
 def radixSortABC(lista):   
     numeroMaximoDeLetras = 0
     separadoPorLetra = []
@@ -60,10 +62,15 @@ def radixSortABC(lista):
 
 
 def main():
-    lista = ["perro", "avion", "zorro", "cabra", "abeja", "luna", "pato", "gato", "leon", "rana"]
-    ordenada = radixSortABC(lista)
-    
-    print(f"\nlista desordenada: {lista}")
-    print(f"\nradix sort:        {ordenada}")
-    print()
+    with open('datos_radix.csv', newline='') as archivo_csv:
+        lista = []
+        lector_csv = csv.reader(archivo_csv)
+        for palabra in list(lector_csv): # una lista de python con 
+            lista.append(palabra[0])
+        ordenada = radixSortABC(lista)
+        
+        print(f"\nlista desordenada: {lista}")
+        print(f"\nradix sort:        {ordenada}")
+        print()
+        
 main()

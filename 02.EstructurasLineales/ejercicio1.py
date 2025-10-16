@@ -34,7 +34,10 @@ class ColaTamañoFijo:
 def main():
     with open('datos_cola.csv', newline='') as archivo_csv:
         lector_csv = csv.reader(archivo_csv)
-        datos = list(lector_csv) # una lista de python con 
+        datos = []
+        lector_csv = csv.reader(archivo_csv)
+        for palabra in list(lector_csv): # una lista de python con 
+            datos.append(palabra[0])
         print(f"Utilizo los valores de la siguiente lista:")
         for dato in datos:
             print(dato)
@@ -43,52 +46,26 @@ def main():
 
         print("\nEjercicio 1 : Cola sobre arreglo\n")
 
-
-        print("\nEncolo valores (0: encolado | -1: cola llena): ")
-        print(animales.encolar(datos.pop(0)[0]))  #  0
-        print(animales.encolar(datos.pop(0)[0]))  #  0
-        print(animales.encolar(datos.pop(0)[0]))  #  0
-        print(animales.encolar(datos.pop(0)[0]))  #  0
-        print(animales.encolar(datos.pop(0)[0]))  #  0
-        print(animales.encolar(datos.pop(0)[0]))  # -1
+        print("\nEncolo valores (0: encolado | -1: cola llena): ")        
+        for dato in datos:
+            print(f"\nQ <-- Resultado: {animales.encolar(datos.pop(0))}")
+            animales.imprimir() # haciendo trampa
+        print(f"\nQ <-- Resultado: {animales.encolar(datos.pop(0))}")
 
         print("\nValores dentro de la cola: ")
-        animales.imprimir() # es trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
+        animales.imprimir() # haciendo trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
         print()
 
-        print("\nDesencolo algunos valores: ")
-        print(animales.desencolar()) # Perro
-        print(animales.desencolar()) # Pato 
-
-        print("\nValores dentro de la cola: ")
-        animales.imprimir() # es trampa -> [None, None, 'Ganzo', 'Lobo', 'Rana']
-        print()
-
-        print("\nEncolo algunos valores: ")
-        print(animales.encolar(datos.pop(0)[0])) #  0
-        print(animales.encolar(datos.pop(0)[0])) #  0
-        print(animales.encolar(datos.pop(0)[0])) # -1
-
-        print("\nValores dentro de la cola: ")
-        animales.imprimir() # es trampa -> ['Rana', 'Mono', 'Ganzo', 'Lobo', 'Rana']
-        print()
-
-        print("\nDesencolo algunos valores: ")
-        print(animales.desencolar()) # Ganzo
-        print(animales.desencolar()) # Lobo
-        print(animales.desencolar()) # Rana
-        print(animales.desencolar()) # Rana
-        print(animales.desencolar()) # Mono
-
-        print("\nLa cola ha quedado vacía: ")
-        animales.imprimir() # es trampa --> [None, None, None, None, None]
-
-        print("\nIntento desencolar de una cola vacía")
+        print("\nDesencolo hasta que quede vacía: ")
         try:
-            print(animales.desencolar()) # desencolar de una cola vacía tira error
+            while(1): 
+                print(f"\nQ --> {animales.desencolar()}")
+                animales.imprimir() # haciendo trampa
 
         except Exception as e:
+            print("\nIntento seguir desencolando:")
             print(f"\nHay un error: {e}") # -> La cola está vacía
+        
 
 
 main()

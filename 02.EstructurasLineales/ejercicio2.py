@@ -28,60 +28,40 @@ class PilaTamañoFijo:
 def main():
     with open('datos_cola.csv', newline='') as archivo_csv:
         lector_csv = csv.reader(archivo_csv)
-        datos = list(lector_csv) # una lista de python con 
+        datos = []
+        lector_csv = csv.reader(archivo_csv)
+        for palabra in list(lector_csv): # una lista de python con 
+            datos.append(palabra[0])
         print(f"Utilizo los valores de la siguiente lista:")
         for dato in datos:
-            print(dato) 
+            print(dato)
 
         animales = PilaTamañoFijo(5)
 
         print("\nEjercicio 2 : Pila sobre arreglo\n")
-
-        print("\nPusheo valores (0: pusheado | -1: pila llena): ")
-        print(animales.push(datos.pop(0)[0]))  #  0
-        print(animales.push(datos.pop(0)[0]))  #  0
-        print(animales.push(datos.pop(0)[0]))  #  0
-        print(animales.push(datos.pop(0)[0]))  #  0
-        print(animales.push(datos.pop(0)[0]))  #  0
-        print(animales.push(datos.pop(0)[0]))  # -1
+        
+        print("\Apilo valores (0: apilado | -1: pila llena): ")        
+        for dato in datos:
+            print(f"\nP <-- Resultado: {animales.push(datos.pop(0))}")
+            animales.imprimir() # haciendo trampa
+        print(f"\nP <-- Resultado: {animales.push(datos.pop(0))}")
 
         print("\nValores dentro de la pila: ")
-        animales.imprimir() # es trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
+        animales.imprimir() # haciendo trampa -> ['Perro', 'Pato', 'Ganzo', 'Lobo', 'Rana']
         print()
 
-        print("\nPopeo algunos valores: ")
-        print(animales.pop()) # Rana
-        print(animales.pop()) # Lobo 
-
-        print("\nValores dentro de la pila: ")
-        animales.imprimir() # es trampa -> ['Perro', 'Pato', 'Ganzo', None , None]
-        print()
-
-        print("\nPusheo valores")
-        print(animales.push(datos.pop(0)[0])) #  0
-        print(animales.push(datos.pop(0)[0])) #  0
-        print(animales.push(datos.pop(0)[0])) # -1
-
-        print("\nValores dentro de la pila: ")
-        animales.imprimir() # es trampa -> ['Perro', 'Pato', 'Ganzo', 'Rana', 'Mono']
-        print()
-
-        print("\nPopeo algunos valores: ")
-        print(animales.pop()) # Mono
-        print(animales.pop()) # Rana
-        print(animales.pop()) # Ganzo
-        print(animales.pop()) # Pato
-        print(animales.pop()) # Perro
-
-        print("\nLa pila ha quedado vacía: ")
-        animales.imprimir() # es trampa --> [None, None, None, None, None]
-
-        print("\nIntento popear de una pila vacía")
+        print("\Desapilo hasta que quede vacía: ")
         try:
-            print(animales.pop()) # desencolar de una pila vacía tira error
+            while(1): 
+                print(f"\nP --> {animales.pop()}")
+                animales.imprimir() # haciendo trampa
 
         except Exception as e:
+            print("\nIntento seguir desapilando:")
             print(f"\nHay un error: {e}") # -> La pila está vacía
+            
+            
+            
 
 main()
 print()
