@@ -16,10 +16,6 @@ CAPACIDAD= [0]*tam_total
 #mapeo (vamos a convertir el indice de 5d a 1d)
 
 def mapear_indice(i0, i1, i2, i3, i4):
-    """
-    Convierte el índice 5D (i0, i1, i2, i3, i4) a un índice 1D (k).
-    k = i4 + D4 * (i3 + D3 * (i2 + D2 * (i1 + D1 * i0)))
-    """
     if not (0 <= i0 < D0_EDIFICIO and 
             0 <= i1 < D1_PISO and 
             0 <= i2 < D2_ALA and 
@@ -139,3 +135,4 @@ plt.bar(tiempos.keys(), tiempos.values())
 plt.title("Comparación de tiempos de respuesta")
 plt.ylabel("Tiempo (segundos)")
 plt.show()
+
