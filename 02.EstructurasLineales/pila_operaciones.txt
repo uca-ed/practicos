@@ -1,0 +1,7 @@
+PUSH rojo
+PUSH azul
+PUSH verde
+POP
+PUSH amarillo
+POP
+PUSH negro

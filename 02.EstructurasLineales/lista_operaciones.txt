@@ -1,0 +1,7 @@
+INSERT nodo1
+INSERT nodo2
+INSERT nodo3
+FIND nodo2
+DELETE nodo2
+FIND nodo2
+INSERT nodo4

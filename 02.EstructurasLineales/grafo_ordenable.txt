@@ -1,0 +1,8 @@
+Tareas Instalacion Configuracion
+Instalacion Descarga
+Configuracion Pruebas Documentacion
+Descarga Dependencias
+Dependencias Compilacion
+Pruebas Entrega
+Documentacion Entrega
+Compilacion Entrega
