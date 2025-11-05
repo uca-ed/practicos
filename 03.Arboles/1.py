@@ -4,7 +4,6 @@ def obtenerAlturaDesdeArreglo(arreglo, k):
     n = len(arreglo)
     if n == 0:
         return -1 # Árbol vacío
-    
     altura = math.ceil(math.log(n, k)) 
     
     return altura
