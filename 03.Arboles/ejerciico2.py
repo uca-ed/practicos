@@ -117,12 +117,7 @@ if __name__ == "__main__":
     for v in valores:
         raiz_avl = avl.insertar(raiz_avl, v)
 
-    print("Árbol original (ABB) - recorrido inorder:")
-    print(" ".join(map(str, abb.inorden(raiz_abb))))
-
-    print("\nÁrbol balanceado (AVL) - recorrido inorder:")
-    print(" ".join(map(str, avl.inorden(raiz_avl))))
-
+   
     print("\nEstructura del ABB:")
     abb.imprimir_arbol(raiz_abb)
 
