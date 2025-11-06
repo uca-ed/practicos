@@ -1,0 +1,103 @@
+import json
+import csv
+import sys
+
+
+def es_reflexiva(rel):
+    for a in rel:
+        if a not in rel[a]:
+            return False
+    return True
+
+def es_simetrica(rel):
+    for a in rel:
+        for b in rel[a]:
+            if b not in rel or a not in rel[b]:
+                return False
+    return True
+
+def es_antisimetrica(rel):
+    for a in rel:
+        for b in rel[a]:
+            if a != b and b in rel and a in rel[b]:
+                return False
+    return True
+
+def es_transitiva(rel):
+    for a in rel:
+        for b in rel[a]:
+            if b not in rel:
+                continue
+            for c in rel[b]:
+                if c not in rel[a]:
+                    return False
+    return True
+
+
+def cargar_relacion_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # Convertimos listas a sets
+    relación = {str(k): set(map(str, v)) for k, v in data.items()}
+    return relación
+
+
+def cargar_relacion_csv(path):
+    matriz = []
+    with open(path, newline="", encoding="utf-8") as f:
+        lector = csv.reader(f)
+        for fila in lector:
+            matriz.append(list(map(int, fila)))
+
+    n = len(matriz)
+    relacion = {}
+
+    for i in range(n):
+        relacion[str(i)] = set()
+        for j in range(n):
+            if matriz[i][j] == 1:
+                relacion[str(i)].add(str(j))
+
+    return relacion
+
+
+
+def analizar(rel):
+    reflexiva = es_reflexiva(rel)
+    simetrica = es_simetrica(rel)
+    antisimetrica = es_antisimetrica(rel)
+    transitiva = es_transitiva(rel)
+
+   
+    print(f"Reflexiva:      {reflexiva}")
+    print(f"Simétrica:      {simetrica}")
+    print(f"Antisimétrica:  {antisimetrica}")
+    print(f"Transitiva:     {transitiva}")
+
+
+    if reflexiva and simetrica and transitiva:
+        print("✅ La relación es una RELACIÓN DE EQUIVALENCIA.\n")
+    elif reflexiva and antisimetrica and transitiva:
+        print("✅ La relación es un ORDEN PARCIAL.\n")
+    else:
+        print("La relación NO es equivalencia ni orden parcial.\n")
+
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Uso: python analizar_relacion.py archivo.json  (o archivo.csv)")
+        sys.exit(1)
+
+    archivo = sys.argv[1]
+
+    if archivo.endswith(".json"):
+        rel = cargar_relacion_json(archivo)
+    elif archivo.endswith(".csv"):
+        rel = cargar_relacion_csv(archivo)
+    else:
+        print("El archivo debe ser .json o .csv")
+        sys.exit(1)
+
+    analizar(rel)
+
