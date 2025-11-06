@@ -1,0 +1,47 @@
+import json
+import sys
+from collections import deque
+
+def cargar_grafo(path):
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    nodos = list(map(str, data["P"]))
+    aristas = {str(k): list(map(str, v)) for k, v in data["E"].items()}
+    return nodos, aristas
+
+def bfs_camino(origen, destino, ady):
+    if origen not in ady or destino not in ady:
+        return None
+    visitado = set([origen])
+    padre = {}
+    cola = deque([origen])
+    while cola:
+        actual = cola.popleft()
+        if actual == destino:
+            break
+        for v in ady.get(actual, []):
+            if v not in visitado:
+                visitado.add(v)
+                padre[v] = actual
+                cola.append(v)
+    if destino not in padre and origen != destino:
+        return None
+    camino = [destino]
+    while camino[-1] != origen:
+        camino.append(padre[camino[-1]])
+    camino.reverse()
+    return camino
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Uso: python camino_grafo.py archivo.json origen destino")
+        sys.exit(1)
+    archivo = sys.argv[1]
+    origen = sys.argv[2]
+    destino = sys.argv[3]
+    nodos, ady = cargar_grafo(archivo)
+    camino = bfs_camino(origen, destino, ady)
+    if camino is None:
+        print("No hay camino")
+    else:
+        print(" -> ".join(camino))
