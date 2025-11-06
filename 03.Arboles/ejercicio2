@@ -1,0 +1,112 @@
+import json
+
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.izq = None
+        self.der = None
+        self.altura = 1
+
+class AVL:
+    def __init__(self):
+        self.raiz = None
+
+    def altura(self, nodo):
+        if nodo is None:
+            return 0
+        return nodo.altura
+
+    def balance(self, nodo):
+        if nodo is None:
+            return 0
+        return self.altura(nodo.izq) - self.altura(nodo.der)
+
+    def rot_der(self, y):
+        x = y.izq
+        t2 = x.der
+        x.der = y
+        y.izq = t2
+        y.altura = 1 + max(self.altura(y.izq), self.altura(y.der))
+        x.altura = 1 + max(self.altura(x.izq), self.altura(x.der))
+        return x
+
+    def rot_izq(self, x):
+        y = x.der
+        t2 = y.izq
+        y.izq = x
+        x.der = t2
+        x.altura = 1 + max(self.altura(x.izq), self.altura(x.der))
+        y.altura = 1 + max(self.altura(y.izq), self.altura(y.der))
+        return y
+
+    def insertar(self, nodo, valor):
+        if nodo is None:
+            return Nodo(valor)
+        if valor < nodo.valor:
+            nodo.izq = self.insertar(nodo.izq, valor)
+        else:
+            nodo.der = self.insertar(nodo.der, valor)
+
+        nodo.altura = 1 + max(self.altura(nodo.izq), self.altura(nodo.der))
+        b = self.balance(nodo)
+
+        if b > 1 and valor < nodo.izq.valor:
+            return self.rot_der(nodo)
+
+        if b < -1 and valor > nodo.der.valor:
+            return self.rot_izq(nodo)
+
+        if b > 1 and valor > nodo.izq.valor:
+            nodo.izq = self.rot_izq(nodo.izq)
+            return self.rot_der(nodo)
+
+        if b < -1 and valor < nodo.der.valor:
+            nodo.der = self.rot_der(nodo.der)
+            return self.rot_izq(nodo)
+
+        return nodo
+
+    def agregar(self, valor):
+        self.raiz = self.insertar(self.raiz, valor)
+
+    def preorden(self, nodo, res):
+        if nodo:
+            res.append(nodo.valor)
+            self.preorden(nodo.izq, res)
+            self.preorden(nodo.der, res)
+
+    def inorden(self, nodo, res):
+        if nodo:
+            self.inorden(nodo.izq, res)
+            res.append(nodo.valor)
+            self.inorden(nodo.der, res)
+
+    def postorden(self, nodo, res):
+        if nodo:
+            self.postorden(nodo.izq, res)
+            self.postorden(nodo.der, res)
+            res.append(nodo.valor)
+
+
+if __name__ == "__main__":
+    with open("datos.json", "r") as f:
+        datos = json.load(f)
+
+    valores = datos["valores"]
+
+    avl = AVL()
+
+    for v in valores:
+        avl.agregar(v)
+
+    pre = []
+    ino = []
+    post = []
+
+    avl.preorden(avl.raiz, pre)
+    avl.inorden(avl.raiz, ino)
+    avl.postorden(avl.raiz, post)
+
+    print("Preorden:", pre)
+    print("Inorden:", ino)
+    print("Postorden:", post)
