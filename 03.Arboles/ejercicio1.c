@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <math.c>
+#include <math.h>
 #define MAX 100
 
 //EJERCICIO 1 -(a). Detectar la altura del arbol sin hacer recorridos
 
-int altura(cantidadNodos, grado){
+int altura(int cantidadNodos, int grado){
     int h = 0;
     int nivelNodos = 1; //el nivel 0 es la raiz
     int total = 1;
@@ -51,6 +51,7 @@ void preOrden(char Arbol[], int grado, int cantidadNodos){
 
     }
 }
+
 
 
 
