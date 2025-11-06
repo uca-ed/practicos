@@ -1,6 +1,6 @@
 import math
 
-def altura_sin_recorrer(arbol, grado):
+def alturaSinRecorrer(arbol, grado):
     n = len(arbol)
     if n == 0:
         return 0
@@ -24,14 +24,14 @@ def main():
     arbol = [1, 2, 3, 4, 5, 6, 7]
     grado = 2
 
-    print("Altura:", altura_sin_recorrer(arbol, grado))
+    print("Altura:", alturaSinRecorrer(arbol, grado))
     print("Preorden:", preorden(arbol, grado))
     print()
     
     arbol = [1, 2, 3, 4, 5, 6, 7, 8]
     grado = 2
 
-    print("Altura:", altura_sin_recorrer(arbol, grado))
+    print("Altura:", alturaSinRecorrer(arbol, grado))
     print("Preorden:", preorden(arbol, grado))
     print()
 
