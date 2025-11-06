@@ -245,9 +245,15 @@ def cargar_valores_desde_archivo(ruta):
         
     Returns:
         list: lista de valores a insertar
+    
+    Raises:
+        FileNotFoundError: si el archivo no existe
     """
-    with open(ruta, 'r', encoding='utf-8') as f:
-        contenido = f.read()
+    try:
+        with open(ruta, 'r', encoding='utf-8') as f:
+            contenido = f.read()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"El archivo '{ruta}' no fue encontrado")
     
     valores = []
     for token in contenido.split():

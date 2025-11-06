@@ -107,16 +107,23 @@ def cargar_desde_archivo(ruta):
     Formato del archivo:
     - Primera línea: grado del árbol
     - Segunda línea en adelante: valores del arreglo separados por espacios
-    - Use 'None' o '0' para posiciones vacías
+    - Use 'None' para posiciones vacías (el string '0' también se interpreta como vacío)
     
     Args:
         ruta: ruta al archivo
         
     Returns:
         ArbolArreglo: el árbol cargado
+    
+    Raises:
+        FileNotFoundError: si el archivo no existe
+        ValueError: si el formato del archivo es inválido
     """
-    with open(ruta, 'r', encoding='utf-8') as f:
-        lineas = f.readlines()
+    try:
+        with open(ruta, 'r', encoding='utf-8') as f:
+            lineas = f.readlines()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"El archivo '{ruta}' no fue encontrado")
     
     if len(lineas) < 2:
         raise ValueError("El archivo debe tener al menos 2 líneas (grado y valores)")
@@ -129,6 +136,8 @@ def cargar_desde_archivo(ruta):
     arreglo = []
     for v in valores_str:
         v = v.strip()
+        # Nota: '0' se interpreta como posición vacía, no como el valor cero
+        # Si necesita representar el valor 0, use otro formato o modifique esta lógica
         if v.lower() == 'none' or v == '0':
             arreglo.append(None)
         else:
