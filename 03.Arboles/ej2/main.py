@@ -12,7 +12,7 @@ def main():
     for valor in datos:
         arbol.insertar(valor)
         print(f"\nDespués de insertar {valor}:")
-        arbol.pretty_print()
+        arbol.imprimir()
         print("-" * 40)
 
     print("\n=== RECORRIDOS ===")
