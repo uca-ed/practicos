@@ -1,0 +1,37 @@
+class ArbolArreglo:
+    def __init__(self, arreglo, grado):
+        self.arreglo = arreglo
+        self.g = grado
+
+    def altura_sin_recorrer(self):
+        n = len(self.arreglo)
+        if n == 0:
+            return 0
+
+        nivel = 0
+        nodos_en_nivel = 1
+
+        while nodos_en_nivel < n:
+            n -= nodos_en_nivel
+            nodos_en_nivel *= self.g
+            nivel += 1
+
+        return nivel + 1
+
+    def preorden(self):
+        resultado = []
+
+        def visitar(i):
+            if i >= len(self.arreglo):
+                return
+            resultado.append(self.arreglo[i])
+            inicio = i * self.g + 1
+            fin = inicio + self.g
+            for hijo in range(inicio, fin):
+                visitar(hijo)
+
+        visitar(0)
+        return resultado
+
+
+
