@@ -1,0 +1,86 @@
+import csv
+import json
+
+
+
+def leer_csv(path):
+    """Lee un archivo CSV que representa una matriz de adyacencia."""
+    matriz = []
+    with open(path, newline='') as f:
+        reader = csv.reader(f)
+        for fila in reader:
+            matriz.append([int(x) for x in fila])
+    return matriz
+
+
+def leer_json(path):
+    """
+    Lee un archivo JSON con nodos y edges.
+    Devuelve la matriz de adyacencia equivalente.
+    Formato esperado:
+    {
+        "P": ["1","2","3"...],
+        "E": {
+             "1": ["2","4","5"],
+             "3": ["1"]
+        }
+    }
+    """
+    with open(path) as f:
+        data = json.load(f)
+
+    nodos = data["P"]
+    n = len(nodos)
+
+    # se crea la matriz NxN en cero
+    matriz = [[0]*n for _ in range(n)]
+
+    # cargar aristas E: key = origen, lista = destinos
+    for origen, destinos in data["E"].items():
+        i = nodos.index(origen)
+        for d in destinos:
+            j = nodos.index(d)
+            matriz[i][j] = 1
+
+    return matriz
+
+
+# ------------------------------------------------------------
+#  OPERADORES SOBRE LA MATRIZ
+# ------------------------------------------------------------
+
+def minimales(matriz):
+   
+    n = len(matriz)
+    res = []
+    for col in range(n):
+        columna = [matriz[fila][col] for fila in range(n)]
+        if sum(columna) == 0:
+            res.append(col)
+    return res
+
+
+def maximales(matriz):
+   
+    n = len(matriz)
+    res = []
+    for fila in range(n):
+        if sum(matriz[fila]) == 0:
+            res.append(fila)
+    return res
+
+
+def vecindad_derecha(matriz, nodo):
+   
+    return [j for j, val in enumerate(matriz[nodo]) if val == 1]
+
+
+def vecindad_izquierda(matriz, nodo):
+   
+    return [i for i in range(len(matriz)) if matriz[i][nodo] == 1]
+
+
+
+def imprimir_matriz(matriz):
+    for fila in matriz:
+        print(" ".join(map(str, fila)))
