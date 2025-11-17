@@ -1,17 +1,19 @@
 import girosv2
 from collections import deque
-import copy
+from typing import Tuple
 import time
-cubo_resuelto = {
-        "esquinas_pos": [0,1,2,3,4,5,6,7],
-        "esquinas_ori": [0,0,0,0,0,0,0,0],
-        "aristas_pos": [0,1,2,3,4,5,6,7,8,9,10,11],
-        "aristas_ori": [0,0,0,0,0,0,0,0,0,0,0,0]
-    }
 
+Estado = Tuple[int, ...]
+
+ESTADO_RESUELTO: Estado = tuple(
+    [0,1,2,3,4,5,6,7] +      # posicion de esquinas
+    [0]*8 +                  # orientacion de esquinas
+    [0,1,2,3,4,5,6,7,8,9,10,11] +  # poscion de aristas
+    [0]*12                   # orientacion de aristas
+)
 class Nodo:
-    def __init__(self, cubo, movimiento=None, padre=None, profundidad=0):
-        self.cubo = cubo                
+    def __init__(self, estado:Estado, movimiento=None, padre=None, profundidad=0):
+        self.estado = estado                
         self.movimiento = movimiento    
         self.padre = padre              
         self.profundidad = profundidad  
@@ -29,21 +31,29 @@ def movimientosPosibles(ultimo_Giro=None):
      if ultimo_Giro is None:
          return todos
      grupo = todos.index(ultimo_Giro)//3
-     return todos[:grupo*3]+ todos[(grupo*3+3):]    
+     return todos[:grupo*3]+ todos[(grupo*3+3):]  
+  
+def girar(cubo,giro) -> Estado:
+    ep = list(cubo[0:8])
+    eo = list(cubo[8:16])
+    ap = list(cubo[16:28])
+    ao = list(cubo[28:40])
 
-def generar_hijos(padre):
-    hijos=[]
-    for m in movimientosPosibles(padre.movimiento):
-        nuevo_cubo = copy.deepcopy(padre.cubo) #para no modificar el original
-        hijo = Nodo(
-            cubo=nuevo_cubo,
-            movimiento=m,
-            padre=padre,
-            profundidad=padre.profundidad + 1
-        )
-        getattr(girosv2,m)(hijo.cubo["esquinas_pos"],hijo.cubo["esquinas_ori"],hijo.cubo["aristas_pos"], hijo.cubo["aristas_ori"])
-        hijos.append(hijo)
-    return hijos
+    getattr(girosv2, giro)(ep, eo, ap, ao)
+
+    return tuple(ep + eo + ap + ao)
+
+def variosGiros(cubo,giros) -> Estado:
+    ep = list(cubo[0:8])
+    eo = list(cubo[8:16])
+    ap = list(cubo[16:28])
+    ao = list(cubo[28:40])
+
+    for giro in giros:
+        getattr(girosv2, giro)(ep, eo, ap, ao)
+
+    return tuple(ep + eo + ap + ao)
+
 #esto es para obtener el recorrido desde la derecha
 def inverso(mov):
     if mov.endswith("p"):     # si termina con "p", es el inverso (por ejemplo "Up")
@@ -60,86 +70,80 @@ def recorridoDe(nodo_izq, nodo_der):
         nodo_izq = nodo_izq.padre
 
     movimientos.reverse()
-    camino_der =[]
     while nodo_der and nodo_der.movimiento:
         movimientos.append(inverso(nodo_der.movimiento))
         nodo_der = nodo_der.padre
-    camino_der.reverse()
-    movimientos.extend(camino_der)
     return movimientos
 
-def comparar_cubos(c1,c2):
-    return (
-        c1["esquinas_pos"] == c2["esquinas_pos"] and
-        c1["esquinas_ori"] == c2["esquinas_ori"] and
-        c1["aristas_pos"] == c2["aristas_pos"] and
-        c1["aristas_ori"] == c2["aristas_ori"]
-    )
-
-def print_cube(cubo, giro):
-    print("=== ",giro," ===")
-    print("Esquinas:")
-    for i, (p, o) in enumerate(zip(cubo["esquinas_pos"],cubo["esquinas_ori"])):
-        print(f"  {i}: pos={p}, ori={o}")
-    print("\nAristas:")
-    for i, (p, o) in enumerate(zip(cubo["aristas_pos"], cubo["aristas_ori"])):
-        print(f"  {i}: pos={p}, ori={o}")
-    print("=================") 
-
-
 def solver(cubo_desarmado, profundidad_max=10):
-    padre_izq = Nodo(copy.deepcopy(cubo_desarmado))
-    padre_der = Nodo(copy.deepcopy(cubo_resuelto))
+    padre_izq = Nodo(cubo_desarmado)
+    padre_der = Nodo(ESTADO_RESUELTO)
 
-    if comparar_cubos(padre_izq.cubo, padre_der.cubo): #caso de que ya este resuelto
+    if padre_izq.estado == padre_der.estado: #caso de que ya este resuelto
         return []
     
     frontera_izq = deque([padre_izq])
     frontera_der = deque([padre_der])
-    visitados_izq = {repr(padre_izq.cubo): padre_izq}
-    visitados_der = {repr(padre_der.cubo): padre_der}
+
+    visitados_izq = {padre_izq.estado: padre_izq}
+    visitados_der = {padre_der.estado: padre_der}
+
     profundidad=0
     while frontera_izq and frontera_der and profundidad < profundidad_max:
         profundidad +=1 #en cada bucle se expande 1 frontera
+        
         if len(frontera_izq) < len(frontera_der): #expandir izq si es mas chica
-            print("se expande frontera izquierda, tamaño:",len(frontera_izq))
-            for _ in range(len(frontera_izq)):
+            tam = len(frontera_izq)
+            print("se expande frontera izquierda, tamaño:",tam)
+            
+            for _ in range(tam):
                 actual = frontera_izq.popleft()
+                
                 if actual.profundidad >= profundidad_max:
                     continue
-                for hijo in generar_hijos(actual):
-                    key = repr(hijo.cubo)
-                    if key not in visitados_izq:
-                        visitados_izq[key] = hijo
+                
+                for mov in movimientosPosibles(actual.movimiento):
+                    nodo_nuevo = girar(actual.estado, mov)
+                    
+                    if nodo_nuevo not in visitados_izq:
+                        hijo = Nodo(nodo_nuevo, mov, actual, actual.profundidad+1)
+                        visitados_izq[nodo_nuevo] = hijo
                         frontera_izq.append(hijo)
+                        
 
-                        if key in visitados_der:
-                            return recorridoDe(hijo, visitados_der[key])
+                        if nodo_nuevo in visitados_der:
+                            return recorridoDe(hijo, visitados_der[nodo_nuevo])
         else:
-            print("se expande frontera derecha, tamaño:",len(frontera_der))
-            for _ in range(len(frontera_der)):
+            tam = len(frontera_der)
+            print("se expande frontera derecha, tamaño:",tam)
+            
+            for _ in range(tam):
                 actual = frontera_der.popleft()
+
                 if actual.profundidad >= profundidad_max:
                     continue
-                for hijo in generar_hijos(actual):
-                    key = repr(hijo.cubo)
-                    if key not in visitados_der:
-                        visitados_der[key] = hijo
+                
+                for mov in movimientosPosibles(actual.movimiento):
+                    nodo_nuevo = girar(actual.estado, mov)
+                    
+                    if nodo_nuevo not in visitados_der:
+                        hijo = Nodo(nodo_nuevo, mov, actual, actual.profundidad+1)
+                        visitados_der[nodo_nuevo] = hijo
                         frontera_der.append(hijo)
 
-                        if key in visitados_izq:
-                            return recorridoDe(visitados_izq[key], hijo)
+                        if nodo_nuevo in visitados_izq:
+                            return recorridoDe(visitados_izq[nodo_nuevo], hijo)
         
     return None
-
-def variosGiros(cubo,giros):
-    for g in giros:
-        getattr(girosv2,g)(cubo["esquinas_pos"],cubo["esquinas_ori"],cubo["aristas_pos"], cubo["aristas_ori"])
-        
+       
 def main():
-    cubo = copy.deepcopy(cubo_resuelto)
-    giros = ["U","R2","F","B","R","B2","R","U2","L","B2","R"]
-    variosGiros(cubo,giros)
+    cubo = ESTADO_RESUELTO
+    giros = ["U","R2","F","B","R","B2","R","U2","L","B2","R","Up"] # 12 giros necesarios, ~ 25 segs
+    """ 
+    # ejemplo de giros para desarmar el cubo (20 giros), con la version actual tarda mucho en resolver
+    giros = ["U","R2","F","B","R","B2","R","U2","L","B2","R","Up","Dp","R2","F","Rp","L","B2","U2","F2"]
+     """
+    cubo = variosGiros(cubo,giros)
     inicio = time.time()
     print("solucion encontrada:",solver(cubo,20))
     fin = time.time()
