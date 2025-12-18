@@ -11,7 +11,7 @@ La entrega de los trabajos prácticos es **grupal**. Para eso, usar la cuenta de
 ## Pasos para la entrega
 
 ### 1. Realizar un fork del repositorio  
-Cada equipo debe realizar un **fork** de este repositorio. Luego de este paso, el repositorio aparecerá en la cuenta de GitHub del usuario que hizo el fork.
+Cada equipo debe realizar un **fork** de este repositorio. Luego de este paso, el repositorio aparecerá en la cuenta de GitHub del usuario que hizo el fork.  
 ![image](https://github.com/user-attachments/assets/88dbbe3d-2ed0-4b4d-977a-e451f7229dca)
 
 ### 2. Agregar colaboradores  
@@ -29,26 +29,43 @@ Desde la cuenta que realizó el fork, configurar como **colaboradores** a los de
   ![image](https://github.com/user-attachments/assets/8ff27756-eba9-4f13-becc-e1eccd2e875f)
 
 ### 3. Trabajar en el repositorio  
-Luego de este paso, todos los miembros del equipo pueden acceder al repositorio y trabajar en el mismo.
+Luego de este paso, todos los miembros del equipo pueden acceder al repositorio y trabajar en el mismo.  
+Cada ejercicio del práctico debe estar resuelto en un archivo independiente y deben estar situados en cada unidad. Por ejemplo:
+
+```
+.
+├── 01.Grafos
+│   ├── ejercicio1.py
+│   ├── ejercicio2.py
+│   ├── ejercicio3.py
+│   └── Readme.md
+├── 02.EstructurasLineales
+│   └── Readme.md
+
+```
+
+### 3.1. Archivos de datos
+Los ejercicios deben poder ejecutarse utilizando los archivos de datos provistos en el repositorio, pero pueden también agregar archivos propios.  
+
+En caso de que los archivos de ejemplo no sean provistos, cada equipo puede preparar sus archivos y sumarlos al Pull Request.  
 
 ### 4. Enviar el enlace del repositorio  
 Compartir el **link del repositorio** con el docente.
 
 ### 5. Realizar un **Pull Request** para la entrega  
 Cuando el trabajo práctico esté listo para su entrega:
-   - Crear un **Pull Request** en GitHub.
+   - Crear un **Pull Request** en GitHub. El nombre del Pull Request debe contener los apellidos de los alumnos que participan en el grupo.
 
   ![image](https://github.com/user-attachments/assets/307f2593-91c2-41fc-b0f7-902e9bebc133)
 
   ![image](https://github.com/user-attachments/assets/8081d5a3-a7cd-4327-a6b2-1cba83abf056)
 
-   - Comparar la branch donde se realizo el trabajo a entregar con la blanch "Main" y crear el Pull Request
+   - Comparar la branch donde se realizo el trabajo a entregar con la branch "Main" y crear el Pull Request
 
   ![image](https://github.com/user-attachments/assets/69494c47-fced-4f7d-81e9-e6e65091d2c5)
 
-   - Especificar el trabajo pratico que se esta entregando y crear el Pull Request
+   - Especificar el trabajo pratico que se esta entregando, indicando los nombres de los participantes y crear el Pull Request
 
   ![image](https://github.com/user-attachments/assets/47796d26-1256-4cb5-b956-f18d7761e5ea)
 
    - Notificar al docente sobre la entrega.
-
