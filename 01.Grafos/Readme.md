@@ -11,17 +11,21 @@
      * csv mostrando la matriz (se deberán identificar a los nodos según la posición que tengan en la misma)
      * json con la estructura del grafo
 
->  Utilizar los archivos provistos en el archivo archivos_ej1.zip 
+> [!NOTE] 
+> Utilizar los archivos provistos en el archivo archivos_ej1.zip 
 
 2. Verificar si un grafo dado cumple las propiedades de Reflexividad, Simetría, Antisimetría y Transitividad. Luego, debe decidir si el grafo es un orden o es corresponde a una relación de equivalencia.
 
+> [!NOTE] 
 >  Utilizar los archivos provistos en el directorio archivos_ej2.zip 
 
 3. Implementar el algoritmo de obtención de paso de un nodo a otro de un grafo. La aplicación debe soportar leer el grafo desde un archivo de disco y la salida debe ser una secuencia con los nodos a recorrer para recrear el paso.
 
+> [!NOTE] 
 >  Utilizar los archivos provistos en el directorio archivos_ej3.zip 
 
-Nota: Los archivos json pueden leerse con el siguiente código python:  
+> [!TIP] 
+> Nota: Los archivos json pueden leerse con el siguiente código python:  
 
 ```
 import json
