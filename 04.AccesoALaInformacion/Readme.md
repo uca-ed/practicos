@@ -5,8 +5,8 @@
 Implementar una tabla de hashing tal que dados los datos en un archivo csv, soporte búsquedas según hashing abierto. 
 Una vez creada la tabla de hashing con los datos provistos, graficar el tamaño de bucket por cada posición del arreglo.
 
-[!NOTE]
-Los archivos para trabajar con Hashing pueden ser descargados desde [el gist Unidad 4](https://gist.github.com/uca-ed/a2cf9eabc03a363c1c279fa1020f43f1.js)
+> [!NOTE]
+> Los archivos para trabajar con Hashing pueden ser descargados desde [el gist Unidad 4](https://gist.github.com/uca-ed/a2cf9eabc03a363c1c279fa1020f43f1.js)
 
 
 2. Hashing Cerrado
@@ -25,7 +25,7 @@ Implementar búsqueda binaria y por interpolación en un arreglo de números sep
 
 
 > [!NOTE]
-> Los archivos de esta unidad fueron creados
+> Los archivos de esta unidad fueron son U04_nombres.csv y U04_nombres_ingles.csv
 > 
 > U04_nombres.csv - es un archivo de nombres tiene 14333 nombres en > castellano para utilizar en una tabla de hashing, generado a partir del siguiente código:
 > 
