@@ -6,7 +6,7 @@ Implementar una tabla de hashing tal que dados los datos en un archivo csv, sopo
 Una vez creada la tabla de hashing con los datos provistos, graficar el tamaño de bucket por cada posición del arreglo.
 
 > [!NOTE]
-> Los archivos para trabajar con Hashing pueden ser descargados desde [el gist Unidad 4](https://gist.github.com/uca-ed/a2cf9eabc03a363c1c279fa1020f43f1.js)
+> Los archivos para trabajar con Hashing pueden ser descargados desde [el gist Unidad 4](https://gist.github.com/uca-ed/a2cf9eabc03a363c1c279fa1020f43f1)
 
 
 2. **Hashing Cerrado**
