@@ -18,13 +18,13 @@ Generar una tabla que por cada valor provisto, indique la cantidad de veces que 
 
 Proponer para el ejercicio anterior volcar la tabla de hashing a disco y hacer las operaciones directamente en memoria secundaria.
 
-2. Búsqueda por interpolación
+4. Búsqueda por interpolación
 
 Implementar búsqueda binaria y por interpolación en un arreglo de números separados uniformemente. Graficar resultados y comparar.  
 
 
 
-[!INFO]
+> [!NOTE]
 > Los archivos de esta unidad fueron creados
 > 
 > U04_nombres.csv - es un archivo de nombres tiene 14333 nombres en > castellano para utilizar en una tabla de hashing, generado a partir del siguiente código:

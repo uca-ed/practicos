@@ -26,21 +26,21 @@
 
 > [!TIP] 
 > Nota: Los archivos json pueden leerse con el siguiente código python:  
-
-```
-import json
-f = open('ed.json')
-estructura = json.load(f)
-
-# Imprimo los nodos que tienen vecindad derecha
-for i in estructura['E']:
-    print(i)
-
-# Imprimo la vecindad derecha de a
-print (estructura['E']['a'])
-
-# Imprimo la cardinalidad derecha de a
-print (len(estructura['E']['a']))
-
-f.close()
-```
+> 
+> ```
+> import json
+> f = open('ed.json')
+> estructura = json.load(f)
+> 
+> # Imprimo los nodos que tienen vecindad derecha
+> for i in estructura['E']:
+>     print(i)
+> 
+> # Imprimo la vecindad derecha de a
+> print (estructura['E']['a'])
+> 
+> # Imprimo la cardinalidad derecha de a
+> print (len(estructura['E']['a']))
+> 
+> f.close()
+> ```
