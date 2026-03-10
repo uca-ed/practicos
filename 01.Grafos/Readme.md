@@ -7,22 +7,23 @@
       c. Vecindad derecha de un nodo  
       d. Vecindad izquierda de un nodo  
 
-   Los grafos se deben poder leer de los archivos provistos como ejemplo; hay dos formatos usados: 
+   Los grafos se deben poder leer de los archivos provistos en el  como ejemplo; hay dos formatos usados: 
      * csv mostrando la matriz (se deberán identificar a los nodos según la posición que tengan en la misma)
      * json con la estructura del grafo
 
 > [!NOTE] 
-> Utilizar los archivos provistos en el archivo archivos_ej1.zip 
+> Utilizar los archivos provistos en el archivo archivos_ej1.zip del [Gist de la Unidad 1](https://gist.github.com/uca-ed/79c95f33bf00e5d8d204a0de5770f42a) 
 
 2. Verificar si un grafo dado cumple las propiedades de Reflexividad, Simetría, Antisimetría y Transitividad. Luego, debe decidir si el grafo es un orden o es corresponde a una relación de equivalencia.
 
 > [!NOTE] 
->  Utilizar los archivos provistos en el directorio archivos_ej2.zip 
+>  Utilizar los archivos provistos en el archivo archivos_ej2.zip del [Gist de la Unidad 1](https://gist.github.com/uca-ed/79c95f33bf00e5d8d204a0de5770f42a) 
+
 
 3. Implementar el algoritmo de obtención de paso de un nodo a otro de un grafo. La aplicación debe soportar leer el grafo desde un archivo de disco y la salida debe ser una secuencia con los nodos a recorrer para recrear el paso.
 
 > [!NOTE] 
->  Utilizar los archivos provistos en el directorio archivos_ej3.zip 
+>  Utilizar los archivos provistos en el archivo archivos_ej3.zip del [Gist de la Unidad 1](https://gist.github.com/uca-ed/79c95f33bf00e5d8d204a0de5770f42a) 
 
 > [!TIP] 
 > Nota: Los archivos json pueden leerse con el siguiente código python:  

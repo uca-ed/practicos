@@ -2,7 +2,7 @@
 
 1. **Hashing Abierto**
 
-Implementar una tabla de hashing tal que dados los datos en un archivo csv, soporte búsquedas según hashing abierto. 
+Implementar una tabla de hashing tal que dados los datos en un archivo csv, soporte búsquedas según hashing **abierto**.  
 Una vez creada la tabla de hashing con los datos provistos, graficar el tamaño de bucket por cada posición del arreglo.
 
 > [!NOTE]
@@ -11,7 +11,7 @@ Una vez creada la tabla de hashing con los datos provistos, graficar el tamaño 
 
 2. **Hashing Cerrado**
 
-Implementar una tabla de hashing tal que dados los datos en un archivo csv, soporte la búsqueda según hashing cerrado.
+Implementar una tabla de hashing tal que dados los datos en un archivo csv, soporte la búsqueda según hashing cerrado.  
 Generar una tabla que por cada valor provisto, indique la cantidad de veces que se calcula re-hash
 
 3. **Hashing Cerrado sobre archivo**
