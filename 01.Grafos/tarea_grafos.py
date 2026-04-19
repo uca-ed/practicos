@@ -2,6 +2,8 @@ import json
 import numpy as np
 import os
 
+#------------------------------------------- Ejercicio 1 -------------------------------------------
+
 class Grafo:
     def __init__(self, matriz, nombres_nodos):
         self.matriz = np.array(matriz)
@@ -77,3 +79,49 @@ for nombre, ruta, tipo in archivos:
         print(f"\n[!] Archivo no encontrado: {ruta}")
 
 print("\n--- FIN DEL PROCESAMIENTO ---")
+
+#------------------------------------------- Ejercicio 2 -------------------------------------------
+
+def analizar_relacion(matriz):
+    n = len(matriz)
+    # 1. REFLEXIVIDAD: 
+    es_reflexiva = np.all(np.diag(matriz) == 1)
+    
+    # 2. SIMETRÍA
+    es_simetrica = np.all(matriz == matriz.T)
+    
+    # 3. ANTISIMETRÍA: Si M[i,j]==1 y M[j,i]==1, entonces i==j
+    
+    solo_diagonal = matriz * matriz.T
+    es_antisimetrica = np.all(np.diag(np.diag(solo_diagonal)) == solo_diagonal)
+    
+    # 4. TRANSITIVIDAD: M^2 debe estar contenida en M
+    
+    m_cuadrado = (np.dot(matriz, matriz) > 0).astype(int)
+    es_transitiva = np.all(matriz >= m_cuadrado)
+    
+    print(f"Propiedades: Reflexiva={es_reflexiva}, Simétrica={es_simetrica}, Antisimétrica={es_antisimetrica}, Transitiva={es_transitiva}")
+    
+ 
+    if es_reflexiva and es_transitiva:
+        if es_simetrica:
+            return "RELACIÓN DE EQUIVALENCIA"
+        if es_antisimetrica:
+            return "RELACIÓN DE ORDEN"
+    return "NINGUNA (Relación General)"          # EJERCICIO 2 
+archivos_ej2 = [
+    ("EJ2 - CSV 01", "archivos_ej2/01.csv"),
+    ("EJ2 - CSV 02", "archivos_ej2/02.csv"),
+    ("EJ2 - CSV 03", "archivos_ej2/03.csv")
+]
+
+print("\n--- ANALIZANDO PROPIEDADES (EJERCICIO 2) ---")
+for nombre, ruta in archivos_ej2:
+    if os.path.exists(ruta):
+        print(f"\n>>> {nombre}")
+        try:
+            g = cargar_csv(ruta)
+            resultado = analizar_relacion(g.matriz)
+            print(f"Resultado Final: {resultado}")
+        except Exception as e:
+            print(f"Error: {e}")
