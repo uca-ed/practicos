@@ -19,7 +19,7 @@ def buscar_paso(grafo_E, inicio, fin):
         if nodo_actual == fin:
             return camino
         
-        # Usamos .get para que si el nodo no tiene salidas, no rompa el programa
+        # Uso .get para que si el nodo no tiene salidas, no rompa el programa
         vecinos = grafo_E.get(nodo_actual, [])
         
         for vecino in vecinos:
@@ -30,7 +30,7 @@ def buscar_paso(grafo_E, inicio, fin):
                 cola.append(nuevo_camino)
     return None
 
-# Lista con tus 6 archivos exactos
+# Lista con los 6 archivos
 archivos = [
     "esDivisorDe-200.json",
     "esDivisorDe-2000.json",
@@ -40,7 +40,7 @@ archivos = [
     "multiplos20000Ref.json"
 ]
 
-# Definimos qué nodos queremos buscar (ajustalos según tu preferencia)
+# Definimos qué nodos queremos buscar
 nodo_inicio = "2"
 nodo_fin = "16"
 
@@ -52,10 +52,10 @@ for nombre_archivo in archivos:
             with open(nombre_archivo, 'r') as f:
                 data = json.load(f)
             
-            # Obtenemos la estructura de conexiones
+            # Obtengo la estructura de conexiones
             grafo_E = data.get('E', {})
             
-            # Ejecutamos la búsqueda
+            # Ejecuto la búsqueda
             resultado = buscar_paso(grafo_E, nodo_inicio, nodo_fin)
             
             print(f"\nArchivo: {nombre_archivo}")
