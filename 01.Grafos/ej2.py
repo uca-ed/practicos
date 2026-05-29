@@ -4,28 +4,28 @@ import os
 def verificar_propiedades(matriz, nodos):
     n = len(nodos)
     
-    # 1. Reflexividad: ¿aRa para todo a? (Diagonal llena de 1s)
+    # 1. Reflexividad: Solo se evalúa la diagonal principal (i == j)
     es_reflexiva = all(matriz[i][i] == 1 for i in range(n))
     
-    # 2. Simetría: ¿aRb implica bRa? (Matriz simétrica respecto a diagonal)
+    # 2. Simetría: Solo el triángulo superior (j > i). Compara M[i][j] con M[j][i]
     es_simetrica = True
     for i in range(n):
-        for j in range(n):
+        for j in range(i + 1, n):  # j arranca desde i + 1
             if matriz[i][j] != matriz[j][i]:
                 es_simetrica = False
                 break
         if not es_simetrica: break
     
-    # 3. Antisimetría: ¿aRb y bRa implican a=b? (No hay 1s simétricos fuera de la diagonal)
+    # 3. Antisimetría: Solo el triángulo superior (j > i). Verifica que no haya doble vía
     es_antisimetrica = True
     for i in range(n):
-        for j in range(n):
-            if i != j and matriz[i][j] == 1 and matriz[j][i] == 1:
+        for j in range(i + 1, n):  # j arranca desde i + 1
+            if matriz[i][j] == 1 and matriz[j][i] == 1:
                 es_antisimetrica = False
                 break
         if not es_antisimetrica: break
     
-    # 4. Transitividad: ¿aRb y bRc implican aRc?
+    # 4. Transitividad: Requiere obligatoriamente evaluar toda la matriz
     es_transitiva = True
     for i in range(n):
         for j in range(n):
