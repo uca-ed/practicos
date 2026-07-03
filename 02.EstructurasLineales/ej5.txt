@@ -1,7 +1,0 @@
-A,B
-A,F
-B,C
-C,D
-C,A
-D,E 
-E,F
