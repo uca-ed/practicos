@@ -1,5 +1,9 @@
-def leercsv():
-    archivo = open("03.csv","r")
+####################################################
+#########            EJERCICIO 1           #########
+####################################################
+
+def leercsv(nombreArchivo):
+    archivo = open(nombreArchivo,"r")
     matriz = []
     for linea in archivo:
         fila = []
@@ -9,6 +13,28 @@ def leercsv():
     archivo.close()
     return matriz
 
+def leerjson():
+    import json
+    f = open('02.json')
+    estructura = json.load(f)
+    matriz = []
+    nodos = estructura["P"]
+    for fila in range(len(nodos)):
+        matriz.append([0]*len(nodos))
+        
+    for fila in range(len(nodos)):
+        nodo_origen = nodos[fila]
+        
+        destinos = estructura["E"].get(nodo_origen, [])
+        
+        for columna in range(len(nodos)):
+            nodo_destino = nodos[columna] 
+            
+            if nodo_destino in destinos:
+                matriz[fila][columna] = 1
+    
+    f.close()
+    return matriz
     
 def minimales(matriz):
     minimales = []
@@ -55,31 +81,58 @@ def izquierda(matriz, nodoElegido):
         
     print("La vecindad izquierda del nodo elegido es: ", vecindadIzquierda)
 
-def leerjson():
-    import json
-    f = open('02.json')
-    estructura = json.load(f)
-    matriz = []
-    nodos = estructura["P"]
-    for fila in range(len(nodos)):
-        matriz.append([0]*len(nodos))
-        
-    for fila in range(len(nodos)):
-        nodo_origen = nodos[fila]
-        
-        destinos = estructura["E"].get(nodo_origen, [])
-        
-        for columna in range(len(nodos)):
-            nodo_destino = nodos[columna] 
-            
-            if nodo_destino in destinos:
-                matriz[fila][columna] = 1
-    
-    f.close()
-    return matriz
-
-matriz = leerjson()
+matriz = leerjson("03.csv")
 minimales(matriz)
 maximales(matriz)
 derecha(matriz, 3)
 izquierda(matriz, 1)
+
+####################################################
+#########            EJERCICIO 2           #########
+####################################################
+
+def esReflexiva(matriz):
+    for i in range(len(matriz)):
+        if matriz[i][i] == 0:
+            return False
+    return True
+
+
+def esSimetrica(matriz):
+    for f in range(len(matriz)):
+        for c in range(len(matriz)):
+            if matriz[f][c]!=matriz[c][f]:
+                return False
+    return True
+
+def esAntisimetrica(matriz):
+    for f in range(len(matriz)):
+        for c in range(len(matriz)):
+            if matriz[f][c]== 1 and matriz[c][f]==1 and c!=f:
+                return False
+    return True
+
+def esTransitiva(matriz):
+    n = len(matriz)
+    for i in range(n):
+        for j in range(n):
+            if matriz[i][j] == 1:
+                for k in range(n):
+                    if matriz[j][k] == 1:
+                        if matriz[i][k] == 0:
+                            return False 
+    return True
+
+def clasificarRelacion(matriz):
+    if esReflexiva(matriz) and esSimetrica(matriz) and esTransitiva(matriz):
+        print("Relacion de Equivalencia")
+    if esReflexiva(matriz) and esAntisimetrica(matriz) and esTransitiva(matriz):
+        print("Relacion de Orden")
+    return
+
+matriz = leerjson("03.csv")
+esReflexiva(matriz)
+esSimetrica(matriz)
+esAntisimetrica(matriz)
+esTransitiva(matriz)
+clasificarRelacion(matriz)
