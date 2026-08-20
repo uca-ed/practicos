@@ -13,9 +13,9 @@ def leercsv(nombreArchivo):
     archivo.close()
     return matriz
 
-def leerjson():
+def leerjson(nombreArchivo):
     import json
-    f = open('02.json')
+    f = open(nombreArchivo)
     estructura = json.load(f)
     matriz = []
     nodos = estructura["P"]
@@ -81,7 +81,7 @@ def izquierda(matriz, nodoElegido):
         
     print("La vecindad izquierda del nodo elegido es: ", vecindadIzquierda)
 
-matriz = leerjson("03.csv")
+matriz = leerjson("02.json")
 minimales(matriz)
 maximales(matriz)
 derecha(matriz, 3)
@@ -130,7 +130,7 @@ def clasificarRelacion(matriz):
         print("Relacion de Orden")
     return
 
-matriz = leerjson("03.csv")
+matriz = leerjson("03.json")
 esReflexiva(matriz)
 esSimetrica(matriz)
 esAntisimetrica(matriz)
