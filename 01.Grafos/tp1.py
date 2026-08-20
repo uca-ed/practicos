@@ -130,7 +130,7 @@ def clasificarRelacion(matriz):
         print("Relacion de Orden")
     return
 
-matriz = leerjson("03.json")
+matriz = leerjson("02.json")
 esReflexiva(matriz)
 esSimetrica(matriz)
 esAntisimetrica(matriz)
