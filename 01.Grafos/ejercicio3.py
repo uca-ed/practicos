@@ -1,6 +1,4 @@
 import json
-import sys
-
 
 def buscar_camino(grafo, inicio, fin, visitados=None):
     if visitados is None:
@@ -13,11 +11,14 @@ def buscar_camino(grafo, inicio, fin, visitados=None):
 
     for vecino in grafo.get(inicio, []):
         if vecino not in visitados:
-            camino = buscar_camino(grafo, vecino, fin, visitados.copy())
+            # Le pasamos la lista directamente en vez de usar .copy()
+            camino = buscar_camino(grafo, vecino, fin, visitados)
 
             if camino is not None:
                 return camino
 
+    # Backtracking: sacamos el nodo si no nos llevó a ningún lado
+    visitados.pop()
     return None
 
 
@@ -26,7 +27,6 @@ def abrir_archivo(nombre_archivo):
         grafo = json.load(archivo)
 
     return grafo
-
 
 
 def main():
