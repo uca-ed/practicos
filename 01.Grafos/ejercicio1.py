@@ -51,8 +51,28 @@ def minimales(mat):
 
   return minimos
 
+def maximal(mat):
+  n = len(mat)
+  max = []
+  
+  for j in range(n):
+    es_maximal = True
+
+    for i in range(n):
+        if i!=j and mat[j][i]==1:
+            es_maximal = False
+            break
+
+    if es_maximal:
+        max.append(j)
+
+  return max
+
 print("Minimales G1:", minimales(grafo1))
 print("Minimales G2:", minimales(grafo2))
 print("Minimales G3:", minimales(grafo3))
 print("Minimales G4:", minimales(grafo4))
-
+print("Maximales G1:", maximal(grafo1))
+print("Maximales G2:", maximal(grafo2))
+print("Maximales G3:", maximal(grafo3))
+print("Maximales G4:", maximal(grafo4))
