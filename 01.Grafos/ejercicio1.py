@@ -73,12 +73,20 @@ def vecindad_derecha(mat, x):
     vd = []
     
     for i in range(n):
-        if(mat[x][i] == 1):
+        if(mat[x][i] == 1 and x!=i):
             vd.append(i)
 
-    return vd;
+    return vd
 
-        
+def vecindad_izquierda(mat, x):
+    n = len(mat)
+    vi = []
+    
+    for i in range(n):
+        if(mat[i][x] == 1 and x!=i):
+            vi.append(i)
+
+    return vi
 
 print("Minimales G1:", minimales(grafo1))
 print("Minimales G2:", minimales(grafo2))
@@ -89,3 +97,4 @@ print("Maximales G2:", maximal(grafo2))
 print("Maximales G3:", maximal(grafo3))
 print("Maximales G4:", maximal(grafo4))
 print("Vecindad derecha de 0 en G4:", vecindad_derecha(grafo4, 0))
+print("Vecindad izquierda de 0 en G4:",vecindad_izquierda(grafo4, 0))
