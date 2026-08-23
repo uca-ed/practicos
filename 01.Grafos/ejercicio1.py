@@ -68,13 +68,13 @@ def maximal(mat):
 
   return max
 
-def vencidad_derecha(mat, x):
+def vecindad_derecha(mat, x):
     n = len(mat)
     vd = []
     
-    for i im range(n):
-        if(mat[x][i] == 1)
-            vd.add(i);
+    for i in range(n):
+        if(mat[x][i] == 1):
+            vd.append(i)
 
     return vd;
 
