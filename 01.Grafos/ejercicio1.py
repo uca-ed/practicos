@@ -68,6 +68,18 @@ def maximal(mat):
 
   return max
 
+def vencidad_derecha(mat, x):
+    n = len(mat)
+    vd = []
+    
+    for(i=0; i<n; i++):
+        if(arr[x][i] == 1)
+            vd.add(i);
+
+    return vd;
+
+        
+
 print("Minimales G1:", minimales(grafo1))
 print("Minimales G2:", minimales(grafo2))
 print("Minimales G3:", minimales(grafo3))
@@ -76,3 +88,4 @@ print("Maximales G1:", maximal(grafo1))
 print("Maximales G2:", maximal(grafo2))
 print("Maximales G3:", maximal(grafo3))
 print("Maximales G4:", maximal(grafo4))
+print("Vecindad derecha de 0 en G4:", vecindad_derecha(grafo4, 0))
