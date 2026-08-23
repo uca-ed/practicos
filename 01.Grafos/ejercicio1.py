@@ -72,8 +72,8 @@ def vencidad_derecha(mat, x):
     n = len(mat)
     vd = []
     
-    for(i=0; i<n; i++):
-        if(arr[x][i] == 1)
+    for i im range(n):
+        if(mat[x][i] == 1)
             vd.add(i);
 
     return vd;
