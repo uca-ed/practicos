@@ -35,10 +35,10 @@ def simetrica(P, E):
     return True
 
 
-def antisimetrica(P, E):
+def antisimetrica(P, E): #diferenciando de antisimetría débil
     for p in P:
         for q in E[p]:
-            if q != p and p in E[q]:
+            if p in E[q]:
                 return False
     return True
 
