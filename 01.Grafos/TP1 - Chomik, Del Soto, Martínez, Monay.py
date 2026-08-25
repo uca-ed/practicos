@@ -150,6 +150,10 @@ def armarSecuencia(anteriores, nodoAnterior, nodoDestino):
     return secuencia
  
 def paso(matriz, nodoOrigen, nodoDestino):
+    if nodoOrigen == nodoDestino:
+        print(f"El paso del nodo {nodoOrigen} al nodo {nodoDestino} es: [{nodoOrigen}]")
+        return
+    
     open = [nodoOrigen]
     closed = []
     visitados = [False]*len(matriz)
