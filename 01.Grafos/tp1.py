@@ -50,16 +50,14 @@ def minimales(matriz):
 
 def maximales(matriz):
     maximales = []
-    nroFila = 1
-    for columna in range(len(matriz)):
+    for fila in range(len(matriz)):
         esMaximal = True
-        for fila in range(len(matriz)):
+        for columna in range(len(matriz)):
             if matriz[fila][columna] == 1:
                 esMaximal = False
                 break
         if esMaximal:
-            maximales.append(nroFila)
-        nroFila += 1
+            maximales.append(fila + 1)
     print("Los maximales son los nodos: ", maximales)
 
 def derecha(matriz, nodoElegido):
