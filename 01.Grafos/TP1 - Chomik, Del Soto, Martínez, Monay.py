@@ -139,44 +139,42 @@ clasificarRelacion(matriz)
 #########            EJERCICIO 3           #########
 ####################################################
 
-def armarSecuencia(anteriores, nodoAnterior, nodoDestino):
-    secuencia = [nodoDestino]
-    actual = nodoAnterior
-    
+def armarSecuencia(anteriores, nodoDestino):
+    secuencia = []
+    actual = nodoDestino
     while actual != 0:
         secuencia.insert(0, actual)
         actual = anteriores[actual - 1]
-        
     return secuencia
  
 def paso(matriz, nodoOrigen, nodoDestino):
     if nodoOrigen == nodoDestino:
         print(f"El paso del nodo {nodoOrigen} al nodo {nodoDestino} es: [{nodoOrigen}]")
         return
-    
+
     open = [nodoOrigen]
-    closed = []
-    visitados = [False]*len(matriz)
-    anteriores = [0]*len(matriz)
-    visitados[nodoOrigen-1] = True
- 
+    visitados = [False] * len(matriz)
+    anteriores = [0] * len(matriz)
+    visitados[nodoOrigen - 1] = True
+
     while len(open) > 0:
         nodo = open.pop(0)
-        closed.append(nodo)
- 
-        for columna in range(len(matriz[nodo-1])):
-            vecino = columna + 1
-            if matriz[nodo-1][columna] == 1 and vecino != nodo:
-                if vecino == nodoDestino:
-                    secuencia = armarSecuencia(anteriores, nodo, nodoDestino)
-                    print("El paso del nodo", nodoOrigen, "al nodo", nodoDestino, "es: ", secuencia)
-                    return
+
+        for columna in range(len(matriz[nodo - 1])):
+            if matriz[nodo - 1][columna] == 1:
+                vecino = columna + 1
+
                 if not visitados[columna]:
                     visitados[columna] = True
                     anteriores[columna] = nodo
                     open.append(vecino)
- 
-    print("No existe paso del nodo", nodoOrigen, "al nodo", nodoDestino)
+
+                    if vecino == nodoDestino:
+                        secuencia = armarSecuencia(anteriores, nodoDestino)
+                        print(f"El paso del nodo {nodoOrigen} al nodo {nodoDestino} es:", secuencia)
+                        return
+
+    print(f"No existe paso del nodo {nodoOrigen} al nodo {nodoDestino}")
  
 matrizPaso = leerjson("esDivisorDe-200.json")
 paso(matrizPaso, 3, 198)
