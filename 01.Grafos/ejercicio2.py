@@ -1,28 +1,5 @@
 """
 EJERCICIO 2 - Propiedades de una relacion representada como grafo.
-
-Un grafo dirigido G = (P, E) es exactamente una relacion binaria R sobre P:
-
-        a R b   <=>   existe la arista a -> b   <=>   M[a][b] == 1
-
-Propiedades (todas se leen sobre la matriz de adyacencia M):
-
-    Reflexiva      M[a][a] == 1 para todo a            (diagonal llena)
-    Simetrica      M[a][b] == M[b][a] para todo a,b    (M == M traspuesta)
-    Antisimetrica  si M[a][b] y M[b][a] entonces a==b  (sin pares mutuos fuera
-                                                        de la diagonal)
-    Transitiva     si M[a][b] y M[b][c] entonces M[a][c]
-
-Clasificacion:
-
-    ES UN ORDEN                reflexiva + antisimetrica + transitiva
-    ES RELACION DE EQUIVALENCIA  reflexiva + simetrica + transitiva
-
-Uso desde la terminal de VS Code:
-
-    python ejercicio2.py 01.json
-    python ejercicio2.py 01.json 02.json 03.json
-    python ejercicio2.py            (analiza 01, 02 y 03 si estan en la carpeta)
 """
 
 import json
@@ -31,16 +8,9 @@ import sys
 import time
 
 
+
+# El grafo: matriz de adyacencia guardada como bitset por fila
 # ======================================================================
-# 1. El grafo: matriz de adyacencia guardada como bitset por fila
-# ======================================================================
-#
-# 03.json tiene 9999 nodos -> la matriz tiene 9999 x 9999 = 99.980.001
-# celdas. Guardar eso como lista de listas de enteros de Python son varios
-# GB de RAM. Por eso cada FILA se guarda como un entero grande de Python
-# usado como conjunto de bits: el bit j prendido significa "existe i -> j".
-# Asi las comparaciones entre filas (union, interseccion, inclusion) las
-# resuelve Python en C de un saque, en vez de con un for en Python.
 
 class Grafo:
 
@@ -83,8 +53,7 @@ def bits(x, nombres):
     return salida
 
 
-# ======================================================================
-# 2. Lectura del json
+# Lectura del json
 # ======================================================================
 
 def leer_json(ruta):
@@ -107,8 +76,8 @@ def leer_json(ruta):
     return g
 
 
-# ======================================================================
-# 3. Las cuatro propiedades
+
+# Las cuatro propiedades
 # ======================================================================
 # Cada funcion devuelve (cumple, contraejemplo) para poder explicar el "no".
 
@@ -183,8 +152,8 @@ def es_orden_total(g):
     return True
 
 
-# ======================================================================
-# 4. Clasificacion + informe
+
+# Clasificacion
 # ======================================================================
 
 def analizar(g):
@@ -239,8 +208,7 @@ def informe(g, r):
     return "\n".join(L)
 
 
-# ======================================================================
-# 5. Programa principal
+# Programa principal
 # ======================================================================
 
 def procesar(ruta):
