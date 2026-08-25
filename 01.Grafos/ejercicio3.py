@@ -1,36 +1,5 @@
 """
 EJERCICIO 3 - Obtencion del paso (camino) de un nodo a otro de un grafo.
-
-La aplicacion:
-  1. Lee un grafo dirigido desde un archivo .json de disco.
-  2. Dado un nodo ORIGEN y un nodo DESTINO, busca un camino entre ellos.
-  3. La salida es la SECUENCIA de nodos a recorrer para recrear el paso:
-        origen -> n1 -> n2 -> ... -> destino
-
-Algoritmo: BUSQUEDA EN ANCHURA (BFS) con listas ABIERTA y CERRADA.
-
-    - ABIERTA (open):   cola de nodos por explorar (descubiertos pero todavia
-                        no expandidos). Es una cola FIFO.
-    - CERRADA (closed): conjunto de nodos ya visitados, para no repetirlos.
-    - PADRE:            por cada nodo, desde que nodo llegue a el. Sirve para
-                        reconstruir el camino yendo del destino al origen y
-                        dando vuelta la lista.
-
-Como BFS expande por niveles, el primer camino que llega al destino es el
-MAS CORTO (menor cantidad de pasos).
-
-Por que BFS y no Floyd-Warshall:
-    Floyd-Warshall calcula los caminos entre TODOS los pares de nodos y cuesta
-    O(n^3). Para el archivo de 20000 nodos eso son ~8.000.000.000.000 de
-    operaciones: inviable. BFS resuelve un par origen->destino recorriendo
-    cada arista una sola vez, O(nodos + aristas), y aca es instantaneo.
-
-Uso desde la terminal de VS Code:
-
-    python3 camino.py esDivisorDe-200.json 1 128
-    python3 camino.py multiplos200Ref.json 128 8
-    python3 camino.py esDivisorDe-200.json        (pide origen y destino)
-    python3 camino.py                             (pide todo por teclado)
 """
 
 import json
@@ -40,8 +9,8 @@ import sys
 from collections import deque
 
 
-# ======================================================================
-# 1. Lectura del grafo (lista de adyacencia)
+
+#Lectura del grafo (lista de adyacencia)
 # ======================================================================
 
 def leer_json(ruta):
@@ -75,8 +44,8 @@ def reparar_json(texto):
     return texto + "]" * max(0, faltan_corch) + "}" * max(0, faltan_llaves)
 
 
-# ======================================================================
-# 2. Busqueda del camino: BFS con listas abierta y cerrada
+
+# Busqueda del camino: BFS con listas abierta y cerrada
 # ======================================================================
 
 def buscar_camino(ady, origen, destino):
@@ -112,8 +81,8 @@ def reconstruir(padre, destino):
     return camino
 
 
-# ======================================================================
-# 3. Programa principal
+
+# Programa principal
 # ======================================================================
 
 def main():
