@@ -1,3 +1,4 @@
+
 import json
 
 def cargar_estructura(nombre_arch):
@@ -17,14 +18,13 @@ def agregar_vecindad_drch(nodo, arcos, fin):
         return pares_nodos, False
 
 def obtenerRecorrido(abrir, cerrar, inicio):
-    pasos=[cerrar[0][0], cerrar[0][1]]
-    referencia=cerrar[0][1]
+    pasos=[cerrar[-1][0], cerrar[-1][1]]
+    referencia=cerrar[-1][1]
     while referencia != inicio:
-        for pares in abrir:
-            if pares[1]==referencia:
+        for pares in cerrar:
+            if pares[0]==referencia:
                 pasos.append(pares[1])
-                referencia=pares[0]
-    pasos.append(inicio)
+                referencia=pares[1]
     pasos.reverse()
     return pasos
 
@@ -35,22 +35,26 @@ def algoritmo_paso(inicio, fin, estructura):
     arcos=estructura["E"]
     abrir = [(inicio, None)]
     cerrar = []
-    while(bandera==0):
+    while(bandera==0 and len(abrir)>0):
         index=(len(abrir)-1)
         nodo=abrir[index][0]
-        nuevos_vecinos=agregar_vecindad_drch(nodo, arcos, fin)
+        padre=abrir[index][1]
         abrir.pop(index)
+        cerrar.append((nodo, padre)) 
+        nuevos_vecinos=agregar_vecindad_drch(nodo, arcos, fin)
         if nuevos_vecinos[1]:
             cerrar.append((fin,nodo))
             bandera=1
         else:
             abrir.extend(nuevos_vecinos[0])
-        
+    if bandera ==0:
+        return None
     pasos=obtenerRecorrido(abrir, cerrar, inicio)
     return pasos
 
 def main():
-    estructura= cargar_estructura("esDivisorDe-200")
-    pasos=algoritmo_paso("12","8",estructura)
+    estructura= cargar_estructura("esDivisorDe-200.json")
+    pasos=algoritmo_paso("3","192",estructura)
     print(pasos)
 
+main()
