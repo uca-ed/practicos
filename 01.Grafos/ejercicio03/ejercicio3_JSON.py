@@ -8,7 +8,7 @@ def main():
     nodo_origen = input("Ingresá el nodo de origen: ")
     nodo_destino = input("Ingresá el nodo de destino: ")
 
-    with open('esDivisorDe-20000.json') as f:
+    with open('multiplos20000Ref.json') as f:
         grafo = json.load(f)
 
     resultado = obtener_paso(grafo, nodo_origen, nodo_destino)
