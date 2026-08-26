@@ -1,6 +1,6 @@
 import json
-import csv
-def BuscarMinimal(lista):
+
+def BuscarMinimal(lista, nodos):
     minimales = []
     col=0
     while(col<len(lista)):
@@ -11,11 +11,12 @@ def BuscarMinimal(lista):
                 count+=1
             fila+=1
         if(count==0):
-            minimales.append(col)
+            minimales.append(nodos[col])
         col+=1
     return minimales
 
-def BuscarMaximal(lista):
+
+def BuscarMaximal(lista, nodos):
     maximales = []
     fila = 0
     while fila < len(lista):
@@ -25,28 +26,36 @@ def BuscarMaximal(lista):
             if col != fila and int(lista[fila][col]) == 1:
                 count += 1
             col += 1
+
         if count == 0:
-            maximales.append(fila)
+            maximales.append(nodos[fila])
+
         fila += 1
+
     return maximales
 
-def BuscarVecindadDer(lista, nodo):
+
+def BuscarVecindadDer(lista, nodos, nodo):
+    idx = nodos.index(nodo)
     pos = []
     col=0
     while col < len(lista):
-        if int(lista[nodo][col]) == 1:
-            pos.append(col)
+        if int(lista[idx][col]) == 1:
+            pos.append(nodos[col])
         col += 1
     return pos
 
-def BuscarVecindadIz(lista, nodo):
+
+def BuscarVecindadIz(lista, nodos, nodo):
+    idx = nodos.index(nodo)
     pos = []
     fila = 0
     while fila < len(lista):
-        if int(lista[fila][nodo]) == 1:
-            pos.append(fila)
+        if int(lista[fila][idx]) == 1:
+            pos.append(nodos[fila])
         fila += 1
     return pos
+
 
 def LeerCSV(ruta):
     f=open(ruta, "r")   
@@ -56,52 +65,60 @@ def LeerCSV(ruta):
         lista = linea.strip().split(",")
         arr.append(lista)   
     f.close()
-    return arr
+
+    nodos = list(range(len(arr)))  
+
+    return arr, nodos
+
 
 def LeerJSON(ruta):
     f = open(ruta, "r")
     estructura = json.load(f)
     f.close()
-
     nodos = estructura["P"]
     n = len(nodos)
-
     arr = []
-    for fila in range(n):
+    fila = 0
+    while fila < n:
+        col = 0
         renglon = []
-        for col in range(n):
+        while col < n:
             renglon.append("0")
+            col += 1
         arr.append(renglon)
-
+        fila += 1
     claves = list(estructura["E"])
 
-    for k in range(len(claves)):
+    k = 0
+    while k < len(claves):
         origen = claves[k]
         i = nodos.index(origen)
 
         destinos = estructura["E"][origen]
 
-        for d in range(len(destinos)):
+        d = 0
+        while d < len(destinos):
             destino = destinos[d]
             j = nodos.index(destino)
             arr[i][j] = "1"
+            d += 1
 
-    return arr
+        k += 1
 
+    return arr, nodos
 
 
 def main():
 
-    lista = LeerJSON("01.json") #Cambiar el nombre del archivo si se quiere ver otro
+    lista, nodos = LeerJSON("01.json") #Cambiar el nombre del archivo si se quiere ver otro
 
-    print("Minimales:", BuscarMinimal(lista))
-    print("Maximales:", BuscarMaximal(lista))
+    print("Minimales:", BuscarMinimal(lista, nodos))
+    print("Maximales:", BuscarMaximal(lista, nodos))
 
-    nodo = 2 #Cambiar a otro nodo cuando se quuiera ver su vvecindad
+    nodo = nodos[2] #Cambiar a otro nodo cuando se quiera ver su vecindad
 
-    print("Vecindad Derecha del nodo", nodo, ":", BuscarVecindadDer(lista, nodo))
-    print("Vecindad Izquierda del nodo", nodo, ":", BuscarVecindadIz(lista, nodo))
-
+    print("Vecindad Derecha del nodo", nodo, ":", BuscarVecindadDer(lista, nodos, nodo))
+    print("Vecindad Izquierda del nodo", nodo, ":", BuscarVecindadIz(lista, nodos, nodo))
 
 
 main()
