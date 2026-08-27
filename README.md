@@ -2,8 +2,6 @@
 
 Este repositorio contiene enunciados para los trabajos prácticos de implementación que se pedirán durante la cursada de Estructuras de Datos.
 
-Probando
-
 # Instrucciones para la Entrega de Trabajos Prácticos
 
 La entrega de los trabajos prácticos es **grupal**. Para eso, usar la cuenta de GitHub de **uno de los miembros del equipo** durante toda la cursada.
