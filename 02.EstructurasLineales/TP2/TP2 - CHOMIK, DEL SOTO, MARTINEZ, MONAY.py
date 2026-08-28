@@ -123,3 +123,55 @@ def procesar_lista(nombre_archivo):
         print("El archivo " + nombre_archivo + " no existe. Crealo para probar.")
 
 procesar_lista("EJ3.txt")
+##############################################
+############       EJERCICIO 4      ##########
+##############################################
+
+def radix_sort(palabras):
+    if not palabras:
+        return []
+        
+    p = max(len(palabra) for palabra in palabras)
+    Q = palabras.copy()
+    
+    for j in range(p - 1, -1, -1):
+        colas = [[] for _ in range(256)]
+        
+        while len(Q) > 0:
+            X = Q.pop(0)
+            
+            if j < len(X):
+                valor_caracter = ord(X[j])
+            else:
+                valor_caracter = 0
+                
+            colas[valor_caracter].append(X)
+            
+        for cola in colas:
+            Q.extend(cola)
+            
+    return Q
+
+def procesar_radix(nombre_archivo):
+    try:
+        archivo = open(nombre_archivo, "r", encoding="utf-8")
+        palabras = []
+        for linea in archivo:
+            palabra = linea.strip()
+            if palabra:
+                palabras.append(palabra)
+        archivo.close()
+        
+        print("Palabras leidas:")
+        print(palabras)
+        
+        palabras_ordenadas = radix_sort(palabras)
+        
+        print("\nPalabras ordenadas:")
+        for palabra in palabras_ordenadas:
+            print(palabra)
+            
+    except FileNotFoundError:
+        print("El archivo " + nombre_archivo + " no existe.")
+
+procesar_radix("EJ4.txt")
