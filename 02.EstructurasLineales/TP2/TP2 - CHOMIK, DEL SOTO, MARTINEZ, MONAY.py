@@ -77,14 +77,13 @@ procesar_pila("EJ2.txt")
 ####################################################
 print("\nEJERCICIO 3\n")
 
-# Representa la celda con enlace simple
 class Celda:
     def __init__(self, dato):
         self.dato = dato
         self.siguiente = None
 
 def procesar_lista(nombre_archivo):
-    cabeza = None  # Partimos de una lista vacía
+    cabeza = None
     
     try:
         archivo = open(nombre_archivo, "r")
@@ -95,13 +94,11 @@ def procesar_lista(nombre_archivo):
             if comando == "INSERTAR":
                 valor = linea[1]
                 nueva_celda = Celda(valor)
-                # Insertamos al inicio (es O(1) y lo más directo)
                 nueva_celda.siguiente = cabeza
                 cabeza = nueva_celda
                 print("Se insertó el valor " + valor)
                 
             elif comando == "ELIMINAR":
-                # Eliminamos el primer elemento (como si fuera un pop)
                 if cabeza is not None:
                     rta = cabeza.dato
                     cabeza = cabeza.siguiente
@@ -112,7 +109,6 @@ def procesar_lista(nombre_archivo):
             else:
                 print("Comando inválido")
             
-            # Recorremos la lista para mostrar su estado actual
             actual = cabeza
             estado = []
             while actual is not None:
@@ -126,9 +122,4 @@ def procesar_lista(nombre_archivo):
     except FileNotFoundError:
         print("El archivo " + nombre_archivo + " no existe. Crealo para probar.")
 
-# Para probarlo, armate un EJ3.txt con:
-# INSERTAR,1
-# INSERTAR,2
-# INSERTAR,3
-# ELIMINAR,
 procesar_lista("EJ3.txt")
