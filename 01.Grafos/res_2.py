@@ -59,7 +59,7 @@ def tipo_relacion(matriz):
         return "Orden"
     return "Ninguna"
 
-matriz, nodos = cargar_json("01.json")
+matriz, nodos = cargar_json("02.json")
 print("Reflexivo:", es_reflexivo(matriz))
 print("Simetrico:", es_simetrico(matriz))
 print("Antisimetrico:", es_antisimetrico(matriz))
