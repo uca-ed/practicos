@@ -126,6 +126,7 @@ procesar_lista("EJ3.txt")
 ##############################################
 ############       EJERCICIO 4      ##########
 ##############################################
+print("\nEJERCICIO 4\n")
 
 def radix_sort(palabras):
     if not palabras:
@@ -175,3 +176,94 @@ def procesar_radix(nombre_archivo):
         print("El archivo " + nombre_archivo + " no existe.")
 
 procesar_radix("EJ4.txt")
+
+####################################################
+#########            EJERCICIO 5           #########
+####################################################
+
+####################################################
+#########            EJERCICIO 6           #########
+####################################################
+print("\nEJERCICIO 6\n")
+
+import random
+
+d = [4,5,2,25,85]
+elementos_totales  = 1
+for dim in d: elementos_totales  *= dim 
+
+INSCRIPTOS = [0]*elementos_totales
+CAPACIDAD = [0]*elementos_totales
+
+for d0 in range(d[0]):
+    for d1 in range(d[1]):
+        for d2 in range(d[2]):
+            for d3 in range(d[3]):
+                capacidad_aula = random.randint(15,60)
+                for d4 in range(d[4]):
+                    indice_lineal = d0*(d[1]*d[2]*d[3]*d[4]) + d1*(d[2]*d[3]*d[4]) + d2*(d[3]*d[4]) + d3*(d[4]) + d4
+                                   
+                    INSCRIPTOS[indice_lineal] = random.randint(0,capacidad_aula)
+                    CAPACIDAD[indice_lineal] = capacidad_aula
+
+def obtener_coordenada(indice_lineal, d):
+    k = len(d)
+    i = [0]*k
+    resto = indice_lineal
+    for j in range(k-1, -1, -1):
+        i[j] = resto%d[j]
+        resto = resto//d[j]
+    return i 
+
+def ocupacion_max(ins, cap, d):
+    porcentaje_max = 0
+    indice = 0
+    for i in range(len(ins)):
+        if porcentaje_max < (ins[i]/cap[i])*100:
+            porcentaje_max = (ins[i]/cap[i])*100
+            indice = i
+    coord = obtener_coordenada(indice,d)
+    print(f"El aula {coord[3]+1} (Edificio {coord[0]+1}, Piso {coord[1]+1}, Ala {coord[2]+1}) en el bloque {coord[4]+1} tiene un {porcentaje_max}% de ocupacion.")
+
+def alumnos_por_piso(bloque, ins, d):
+    bloque -= 1 
+    aulas_por_piso = d[0] * d[2] * d[3] 
+    for piso in range(d[1]):
+        suma = 0
+        for edificio in range(d[0]):
+            for ala in range(d[2]):
+                salto = edificio*(d[1]*d[2]*d[3]*d[4]) + piso*(d[2]*d[3]*d[4]) + ala*(d[3]*d[4]) + bloque
+                for aula in range(d[3]):
+                    indice = salto + aula * (d[4])
+                    suma += ins[indice]
+                    
+        promedio = suma / aulas_por_piso
+        print(f"Piso {piso+1}: Suma total = {suma} | Promedio = {promedio:.2f} alumnos.")
+
+def alumnos_por_ala(edificio,piso,bloque,ins, d):
+    edificio-=1
+    piso-=1
+    bloque-=1
+    for ala in range(d[2]):
+        suma = 0
+        salto = edificio*(d[1]*d[2]*d[3]*d[4]) + piso*(d[2]*d[3]*d[4]) + ala*(d[3]*d[4]) + bloque
+        for aula in range(d[3]):
+            indice = salto + aula*(d[4])
+            suma += ins[indice]
+        print(f"Alumnos en ala {ala+1}: {suma}")
+
+""" 
+#Prueba con menos dimensiones
+d = [2, 1, 1, 2, 2] 
+INSCRIPTOS = [5, 3, 15, 4, 8, 9, 10, 5]
+CAPACIDAD  = [10, 10, 20, 20, 10, 10, 20, 20]
+"""
+
+print("a.")
+ocupacion_max(INSCRIPTOS, CAPACIDAD, d)
+        
+print("b.")
+alumnos_por_piso(2, INSCRIPTOS, d)
+
+print("c.")
+alumnos_por_ala(2,1,2,INSCRIPTOS,d)
