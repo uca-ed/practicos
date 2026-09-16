@@ -1,0 +1,14 @@
+# Nodos y arcos del grafo (formato: ARCO,origen,destino)
+NODO,a
+NODO,b
+NODO,c
+NODO,d
+NODO,e
+NODO,f
+ARCO,a,b
+ARCO,a,c
+ARCO,b,d
+ARCO,c,d
+ARCO,c,e
+ARCO,d,f
+ARCO,e,f

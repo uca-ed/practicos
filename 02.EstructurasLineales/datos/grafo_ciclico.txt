@@ -1,0 +1,9 @@
+# Este grafo tiene un ciclo: b -> c -> d -> b
+NODO,a
+NODO,b
+NODO,c
+NODO,d
+ARCO,a,b
+ARCO,b,c
+ARCO,c,d
+ARCO,d,b
