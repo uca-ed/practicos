@@ -1,0 +1,52 @@
+{
+  "nodos": [
+    "Definicion de Requerimientos",
+    "Diseño de Base de Datos",
+    "Diseño de Interfaz",
+    "Desarrollo Backend",
+    "Desarrollo Frontend",
+    "Pruebas Unitarias",
+    "Pruebas de Integracion",
+    "Auditoria de Seguridad",
+    "Despliegue en Produccion"
+  ],
+  "aristas": [
+    {
+      "nombre": "Definicion de Requerimientos",
+      "correlativa": "Diseño de Base de Datos"
+    },
+    {
+      "nombre": "Definicion de Requerimientos",
+      "correlativa": "Diseño de Interfaz"
+    },
+    {
+      "nombre": "Diseño de Base de Datos",
+      "correlativa": "Desarrollo Backend"
+    },
+   
+    {
+      "nombre": "Desarrollo Backend",
+      "correlativa": "Pruebas Unitarias"
+    },
+    {
+      "nombre": "Desarrollo Frontend",
+      "correlativa": "Pruebas Unitarias"
+    },
+    {
+      "nombre": "Pruebas Unitarias",
+      "correlativa": "Pruebas de Integracion"
+    },
+    {
+      "nombre": "Pruebas de Integracion",
+      "correlativa": "Auditoria de Seguridad"
+    },
+    {
+      "nombre": "Auditoria de Seguridad",
+      "correlativa": "Despliegue en Produccion"
+    },
+    {
+      "nombre": "Diseño de Interfaz",
+      "correlativa": "Desarrollo Frontend"
+    }
+  ]
+}
