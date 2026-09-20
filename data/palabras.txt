@@ -1,0 +1,12 @@
+grafo
+arbol
+pila
+cola
+lista
+nodo
+arco
+vertice
+matriz
+conjunto
+relacion
+orden
