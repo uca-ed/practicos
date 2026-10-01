@@ -2,11 +2,11 @@
 
 1. Dado un arreglo sobre el que está representado un árbol de grado indicado como dato, dar un algoritmo que:
 
-a) detecte la altura del árbol sin hacer recorridos 
-b) realice un barrido pre-orden 
-c) realice un barrido post-orden 
-d) realice un barrido por niveles 
-e) realice un barrido simétrico (de un árbol binario) 
+a) detecte la altura del árbol sin hacer recorridos  
+b) realice un barrido pre-orden  
+c) realice un barrido post-orden  
+d) realice un barrido por niveles  
+e) realice un barrido simétrico (de un árbol binario)  
 
 > [!TIP] 
 > Existe el script generar-arbol.py que sirve para generar árboles de grados pares y altura h. Esto imprimirá un arreglo correspondiente a la representación de árboles r-arios en arreglos vista en clase. Los algoritmos deben poder leer tal archivo.
