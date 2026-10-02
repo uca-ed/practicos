@@ -1,0 +1,6 @@
+materia1,materia3
+materia2,materia3
+materia3,materia4
+materia3,materia5
+materia4,materia6
+materia5,materia6
