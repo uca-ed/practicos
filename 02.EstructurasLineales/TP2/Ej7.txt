@@ -1,0 +1,6 @@
+Analisis,Algoritmos
+Algoritmos,EstructuraDeDatos
+Analisis,EstructuraDeDatos
+EstructuraDeDatos,SistemasOperativos
+Algoritmos,BasesDeDatos
+BasesDeDatos,SistemasOperativos

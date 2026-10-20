@@ -18,4 +18,3 @@ e) realice un barrido simétrico (de un árbol binario)
 
 
 2. Crear un árbol AVL realizando las inserciones dadas en el archivo de datos.
-
