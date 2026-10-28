@@ -1,3 +1,28 @@
+# Ejercicio 1 - Resultados
+## a) 
+
+## b) Barrido Pre Orden
+
+<img width="65" height="135" alt="Pre orden" src="https://github.com/user-attachments/assets/61b60c03-c3ef-4900-bc1b-e951a519dc43" />
+
+## c) Barrido Post Orden
+
+<img width="72" height="160" alt="image" src="https://github.com/user-attachments/assets/20a56a5b-9e8f-4d99-ab83-61f8882385db" />
+
+## d) Barrido Por Niveles
+
+<img width="47" height="443" alt="image" src="https://github.com/user-attachments/assets/d8628d86-e607-41c1-a07e-527e1e0a54fa" />
+
+## e) Barrido Simétrico
+
+<img width="45" height="103" alt="Captura de pantalla 2026-10-28 153743" src="https://github.com/user-attachments/assets/834e51a6-86d9-428d-8c90-5062d2468b6e" />
+
+# Ejercicio 2 - Resultado
+<img width="262" height="87" alt="image" src="https://github.com/user-attachments/assets/463c0d7d-0a6c-47e9-8297-048662c51b5d" />
+
+
+
+
 # Árboles
 
 1. Dado un arreglo sobre el que está representado un árbol de grado indicado como dato, dar un algoritmo que:
