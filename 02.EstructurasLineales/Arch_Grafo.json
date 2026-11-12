@@ -1,0 +1,55 @@
+{
+  "nodos": [
+    "Intro a la Programacion",
+    "Algoritmos 1",
+    "Algoritmos 2",
+    "Organizacion del Computador",
+    "Sistemas Operativos",
+    "Bases de Datos",
+    "Ingenieria de Software",
+    "Redes",
+    "Tesis de Grado"
+  ],
+  "aristas": [
+    {
+      "nombre": "Intro a la Programacion",
+      "correlativa": "Algoritmos 1"
+    },
+    {
+      "nombre": "Algoritmos 1",
+      "correlativa": "Algoritmos 2"
+    },
+    {
+      "nombre": "Algoritmos 1",
+      "correlativa": "Organizacion del Computador"
+    },
+    {
+      "nombre": "Algoritmos 2",
+      "correlativa": "Bases de Datos"
+    },
+    {
+      "nombre": "Algoritmos 2",
+      "correlativa": "Ingenieria de Software"
+    },
+    {
+      "nombre": "Organizacion del Computador",
+      "correlativa": "Sistemas Operativos"
+    },
+    {
+      "nombre": "Sistemas Operativos",
+      "correlativa": "Redes"
+    },
+    {
+      "nombre": "Bases de Datos",
+      "correlativa": "Ingenieria de Software"
+    },
+    {
+      "nombre": "Ingenieria de Software",
+      "correlativa": "Tesis de Grado"
+    },
+    {
+      "nombre": "Redes",
+      "correlativa": "Tesis de Grado"
+    }
+  ]
+}
