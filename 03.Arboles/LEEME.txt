@@ -1,0 +1,13 @@
+Archivos incluidos
+- altura-arbol.py: calcula la altura del árbol lleno generado, sin recorrer sus nodos.
+- barrido-pre-orden.py
+- barrido-post-orden.py
+- barrido-por-nievles.py: conserva el nombre con el error tipográfico que aparece en correr-barridos.sh.
+- barrido-simetrico.py
+- arbol-avl.py: inserta los valores del archivo en un AVL y muestra el resultado en preorden.
+
+Los recorridos r-arios usan hijos en los índices r*i+1 hasta r*i+r.
+El recorrido simétrico usa el índice del hijo izquierdo 2*i+1 y del derecho 2*i+2.
+
+Para usar correr-barridos.sh, poner estos scripts junto a generar-arbol.py y correr-barridos.sh.
+El archivo de datos del AVL debe contener números separados por espacios o saltos de línea.
