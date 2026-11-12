@@ -2,8 +2,6 @@
 
 Este repositorio contiene enunciados para los trabajos prácticos de implementación que se pedirán durante la cursada de Estructuras de Datos.
 
-Probando
-
 # Instrucciones para la Entrega de Trabajos Prácticos
 
 La entrega de los trabajos prácticos es **grupal**. Para eso, usar la cuenta de GitHub de **uno de los miembros del equipo** durante toda la cursada.
@@ -69,3 +67,53 @@ Cuando el trabajo práctico esté listo para su entrega:
   ![image](https://github.com/user-attachments/assets/47796d26-1256-4cb5-b956-f18d7761e5ea)
 
    - Notificar al docente sobre la entrega.
+# TP Estructuras Lineales
+
+Implementación en Python, un archivo por ejercicio. Cada script se puede
+ejecutar directamente (`python3 ejN_....py`); todos leen por defecto un
+archivo de ejemplo en `data/`, y opcionalmente aceptan la ruta a otro
+archivo como argumento (`python3 ej1_colas.py data/otro_archivo.txt`).
+
+## Contenido
+
+| Archivo | Ejercicio | Descripción |
+|---|---|---|
+| `ej1_colas.py` | 1 | Cola sobre arreglo circular. Lee `data/operaciones_cola.txt`. |
+| `ej2_pilas.py` | 2 | Pila sobre arreglo. Lee `data/operaciones_pila.txt`. |
+| `ej3_lista_enlazada.py` | 3 | Lista con celdas de enlace simple (Nodo + ListaEnlazada). |
+| `ej4_radix_sort.py` | 4 | Radix Sort LSD sobre palabras. Lee `data/palabras.txt`. |
+| `ej5_tsort.py` | 5 | T-Sort por eliminación de nodos fuente (grado de entrada). Lee `data/grafo_tsort.txt`. |
+| `ej6_inscriptos.py` | 6 | Arreglo 5D (INSCRIPTOS/CAPACIDAD) sobre arreglo lineal, con `h` y `h⁻¹`. |
+| `ej7_sort_topologico.py` | 7 | Sort topológico con DFS. Lee `data/grafo_topologico.txt`. |
+
+También hay `data/grafo_ciclico.txt` para probar la detección de ciclos
+(pasalo como argumento a `ej5_tsort.py` o `ej7_sort_topologico.py`).
+
+## Notas por ejercicio
+
+**Ej. 1 y 2 (cola/pila):** el "arreglo" es un `list` de Python de
+capacidad fija (`capacidad=100` por defecto), usado como estructura de
+tamaño fijo real (no se usa `append`/`pop` de Python como atajo): la cola
+usa punteros `frente`/`fondo` circulares, la pila un puntero `tope`.
+
+**Ej. 4 (Radix Sort):** sigue el algoritmo de la cátedra tal cual está en
+la diapositiva: procesa desde la posición **menos significativa** (el
+último carácter, j=1) hacia la más significativa (primer carácter, j=p),
+usando 27 baldes (0 para relleno, 1-26 para 'a'-'z'). Esto hace que las
+palabras más cortas se traten como si tuvieran "ceros" (relleno) a la
+**izquierda**, igual que un número — por eso el resultado **no** es el
+mismo que un `sorted()` alfabético común (por ejemplo, "pila" puede
+quedar antes que "arbol", porque se comparan primero los últimos
+caracteres). Es el comportamiento esperado del algoritmo tal como está
+definido, no un bug.
+
+**Ej. 5 vs Ej. 7:** son dos algoritmos distintos para el mismo tipo de
+problema, para mostrar dos enfoques: el 5 elimina iterativamente nodos
+fuente (grado de entrada 0, en línea con `Min(G)`); el 7 usa DFS con
+postorden invertido. Ambos detectan ciclos.
+
+**Ej. 6 (INSCRIPTOS):** como no se da un archivo de datos, se generan
+datos aleatorios (`seed=42` para reproducibilidad). Las consultas b) y c)
+recorren el arreglo lineal directamente con los saltos (strides) que
+salen de la fórmula de `h`, sin reconstruir los 5 índices en cada paso,
+tal como pide la consigna.
