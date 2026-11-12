@@ -1,0 +1,8 @@
+perro
+casa
+auto
+ave
+mesa
+gato
+barco
+sol
